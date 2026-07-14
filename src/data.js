@@ -7,7 +7,7 @@ export const userData = {
   stats: [
     { label: "Years of Study", value: "3+" },
     { label: "Projects Completed", value: "15+" },
-    { label: "Hackathons", value: "5" }
+    { label: "Certifications", value: "5" }
   ],
   skills: {
     frontend: [
@@ -84,6 +84,20 @@ export const userData = {
       tags: ["Tech 1", "Tech 2"],
       github: "#",
       demo: "#"
+    }
+  ],
+  certifications: [
+    {
+      title: "Certification 1",
+      issuer: "Issuing Organization",
+      date: "2023",
+      link: "#"
+    },
+    {
+      title: "Certification 2",
+      issuer: "Issuing Organization",
+      date: "2024",
+      link: "#"
     }
   ]
 };

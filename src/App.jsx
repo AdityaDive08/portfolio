@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import './index.css';
 
@@ -16,6 +17,7 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        <Certifications />
         <Contact />
       </main>
       <footer style={{ textAlign: 'center', padding: '30px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', background: 'rgba(0, 0, 0, 0.3)' }}>
