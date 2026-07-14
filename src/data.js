@@ -31,8 +31,9 @@ export const userData = {
     tools: [
       { name: "Git", icon: "GitBranch" },
       { name: "GitHub", icon: "FaGithub" },
-      { name: "Docker", icon: "Box" },
-      { name: "Figma", icon: "FaFigma" }
+      { name: "Postman", icon: "Send" },
+      { name: "Vercel", icon: "Triangle" },
+      { name: "VS Code", icon: "Code" }
     ]
   },
   projects: [
