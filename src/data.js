@@ -22,7 +22,11 @@ export const userData = {
       { name: "Express.js", icon: "API" },
       { name: "Python", icon: "Terminal" },
       { name: "SQL", icon: "Database" },
-      { name: "MongoDB", icon: "Database" }
+      { name: "MongoDB", icon: "Database" },
+      { name: "REST APIs", icon: "API" },
+      { name: "Java", icon: "FileCode" },
+      { name: "PHP", icon: "FileCode" },
+      { name: "Kotlin", icon: "FileCode" }
     ],
     tools: [
       { name: "Git", icon: "GitBranch" },
