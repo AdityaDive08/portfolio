@@ -65,11 +65,11 @@ export const userData = {
       demo: "#"
     },
     {
-      title: "New Project 2",
-      description: "Description for your new project. Update this text to describe what the project is about.",
-      image: "/placeholder2.png",
-      tags: ["Tech 1", "Tech 2"],
-      github: "#",
+      title: "Stroke Risk Prediction",
+      description: "This web application predicts a patient's stroke risk based on health factors like age and BMI. It pairs an interactive React frontend for user input with a Python backend that uses a machine learning model to deliver instant predictions.",
+      image: "/strokrprediction.png",
+      tags: ["Python", "ReactJS"],
+      github: "https://github.com/AdityaDive08/Stroke-Prediction.git",
       demo: "#"
     },
     {
