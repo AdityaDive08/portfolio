@@ -6,8 +6,8 @@ export const userData = {
   location: "India",
   stats: [
     { label: "Years of Study", value: "3+" },
-    { label: "Projects Completed", value: "15+" },
-    { label: "Certifications", value: "5" }
+    { label: "Projects Completed", value: "5+" },
+    { label: "Certifications", value: "8" }
   ],
   skills: {
     frontend: [
@@ -37,12 +37,12 @@ export const userData = {
     ]
   },
   projects: [
-    {
-      title: "AI-Powered-Mock-Interview",
-      description: "The AI Powered Mock Interview system is an intelligent web-based application developed as a Mini Project during my Master's program. This platform simulates real interview scenarios using AI-driven logic to help users prepare effectively for technical and behavioral interviews",
-      image: "/aimockinterview.png",
-      tags: ["HTMl /CSS", "PHP", "MySQL"],
-      github: "https://github.com/AdityaDive08/AI-Powered-Mock-Interview",
+     {
+      title: "SteelMart",
+      description: "SteelMart CRM is a MERN stack Customer Relationship Management (CRM) application developed during my internship to streamline customer, vendor, and sales operations in the steel industry. The system enables efficient management of leads, customers, quotations, orders, and invoices through a centralized dashboard. It features secure authentication, role-based access control, and RESTful APIs for seamless business workflow management.",
+      image: "/steelmart.png",
+      tags: ["ReactJS", "NodeJS","ExpressJS","MySQL"],
+      github: "https://github.com/AdityaDive08/SteelMart.git",
       demo: "#"
     },
     {
@@ -53,12 +53,12 @@ export const userData = {
       github: "https://github.com/AdityaDive08/HealthFreak",
       demo: null
     },
-    {
-      title: "Pharmacy Management System",
-      description: "Pharmacy Management System is a web-based application that streamlines pharmacy operations by managing medicine inventory, sales, billing, and customer records. It provides an intuitive interface for tracking stock, monitoring expiry dates, and generating invoices, helping improve efficiency and reduce manual work.",
-      image: "/pharmacymanagementsystem.png",
-      tags: ["HTML /CSS", "PHP", "MySQL"],
-      github: "https://github.com/AdityaDive08/Pharmacy-Management-System",
+   {
+      title: "AI-Powered-Mock-Interview",
+      description: "The AI Powered Mock Interview system is an intelligent web-based application developed as a Mini Project during my Master's program. This platform simulates real interview scenarios using AI-driven logic to help users prepare effectively for technical and behavioral interviews",
+      image: "/aimockinterview.png",
+      tags: ["HTMl /CSS", "PHP", "MySQL"],
+      github: "https://github.com/AdityaDive08/AI-Powered-Mock-Interview",
       demo: "#"
     },
     {
@@ -78,26 +78,62 @@ export const userData = {
       demo: "#"
     },
     {
-      title: "New Project 3",
-      description: "Description for your new project. Update this text to describe what the project is about.",
-      image: "/placeholder3.png",
-      tags: ["Tech 1", "Tech 2"],
-      github: "#",
+      title: "Pharmacy Management System",
+      description: "Pharmacy Management System is a web-based application that streamlines pharmacy operations by managing medicine inventory, sales, billing, and customer records. It provides an intuitive interface for tracking stock, monitoring expiry dates, and generating invoices, helping improve efficiency and reduce manual work.",
+      image: "/pharmacymanagementsystem.png",
+      tags: ["HTML /CSS", "PHP", "MySQL"],
+      github: "https://github.com/AdityaDive08/Pharmacy-Management-System",
       demo: "#"
     }
   ],
   certifications: [
     {
-      title: "Certification 1",
-      issuer: "Issuing Organization",
-      date: "2023",
-      link: "#"
+      title: "Certificate Of Publication",
+      issuer: "IRJIET",
+      date: "Nov-2025",
+      link: "https://drive.google.com/file/d/166Gu1ev-acxXXXsBy_q5TNt3dJi1U1CT/view?usp=drive_link"
     },
     {
-      title: "Certification 2",
-      issuer: "Issuing Organization",
-      date: "2024",
-      link: "#"
+      title: "Python For Data Science",
+      issuer: "NPTL",
+      date: "Aug-2025",
+      link: "https://drive.google.com/file/d/137-rr3EwIhQbL5xLP-LSUk4kpwxrNNjm/view?usp=sharing"
+    },
+     {
+      title: "Java Training Certification",
+      issuer: "IIT Bombay",
+      date: "Oct-2025",
+      link: "https://drive.google.com/file/d/1-PdQl6wvlS42621FAnq5VegR3FGJVJ5Y/view?usp=drive_link"
+    },
+     {
+      title: "Python Training Certification",
+      issuer: "IIT Bombay",
+      date: "April-2025",
+      link: "https://drive.google.com/file/d/14PWn7L8yN4uDo4aKDD10qhYO7IC7mcZp/view?usp=drive_link"
+    },
+     {
+      title: "Full Stack Development",
+      issuer: "Hummingbyte Technologies Pvt.Ltd.",
+      date: "Oct-2025",
+      link: "https://drive.google.com/file/d/1YDGX3p-UwD-K1-RdUzuqthBzgx1G2r22/view?usp=drive_link"
+    },
+     {
+      title: "CPP Training Certification",
+      issuer: "IIT Bombay",
+      date: "Dec-2024",
+      link: "https://drive.google.com/file/d/1gJ2_rMl_rn3Ht0y6lW5lXmLSqC4ZWTxn/view?usp=drive_link"
+    },
+     {
+      title: "Android App Development",
+      issuer: "Simplilern",
+      date: "Oct-2025",
+      link: "https://drive.google.com/file/d/1gJ2_rMl_rn3Ht0y6lW5lXmLSqC4ZWTxn/view?usp=drive_link"
+    },
+     {
+      title: "Android App Development",
+      issuer: "Trinit",
+      date: "Oct-2025",
+      link: "https://drive.google.com/file/d/1NT1Mav-UuJaA-dnXIgVvPkLPbO2722G1/view?usp=drive_link"
     }
   ]
 };
