@@ -36,9 +36,10 @@ const Contact = () => {
         style={{ display: 'grid', gap: '50px', padding: '50px' }}
       >
         <div>
-          <h3 style={{ fontSize: '2rem', marginBottom: '20px' }}>Let's Connect!</h3>
+          <h3 style={{ fontSize: '2rem', marginBottom: '20px' }}>Let's Connect..!</h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '30px' }}>
-            I'm currently looking for internship opportunities and freelance projects. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            {/* I'm currently looking for internship opportunities and freelance projects.  */}
+            Whether you have a question or just want to say hi, I'll try my best to get back to you..!
           </p>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>

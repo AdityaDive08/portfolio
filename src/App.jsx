@@ -22,7 +22,7 @@ function App() {
       </main>
       <footer style={{ textAlign: 'center', padding: '30px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', background: 'rgba(0, 0, 0, 0.3)' }}>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          &copy; {new Date().getFullYear()} Aditya Dive. Built with Passion & React.
+          &copy; {new Date().getFullYear()} Aditya Dive. Built Software with Passion.
         </p>
       </footer>
     </>

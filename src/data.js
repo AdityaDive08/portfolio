@@ -1,6 +1,6 @@
 export const userData = {
   name: "Aditya Dive",
-  role: "Information Technology Student & Aspiring Software Engineer",
+  role: "Master In Computer Application Student & Aspiring Software Developer",
   bio: "I am a passionate IT student focusing on web development, software engineering, and solving complex problems with modern technologies.",
   email: "adityaarundive@gmail.com",
   location: "India",

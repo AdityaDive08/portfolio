@@ -23,7 +23,7 @@ const About = () => {
         >
           <h3 style={{ fontSize: '2rem', marginBottom: '20px' }}>My Journey in Tech</h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '20px' }}>
-            Currently pursuing my degree in Information Technology, I have developed a strong foundation in computer science principles and software development. I am constantly exploring new technologies and building projects to hone my skills.
+            Currently pursuing my Master's Degree in Information Technology, I have developed a strong foundation in computer science principles and software development. I am constantly exploring new technologies and building projects to skillsUp.
           </p>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '40px' }}>
             When I'm not coding, I enjoy participating in hackathons, contributing to open-source projects, and reading about the latest tech trends in artificial intelligence and web architecture.
