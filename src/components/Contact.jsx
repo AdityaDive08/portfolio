@@ -6,14 +6,40 @@ import { userData } from '../data';
 const Contact = () => {
   const [status, setStatus] = useState('idle');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
-    setTimeout(() => {
-      setStatus('sent');
-      e.target.reset();
-      setTimeout(() => setStatus('idle'), 3000);
-    }, 1500);
+    
+    const formData = new FormData(e.target);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message')
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus('sent');
+        e.target.reset();
+        setTimeout(() => setStatus('idle'), 3000);
+      } else {
+        setStatus('idle');
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setStatus('idle');
+      alert('Failed to send message. Please check if the backend server is running.');
+    }
   };
 
   return (
@@ -58,10 +84,10 @@ const Contact = () => {
         </div>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <input type="text" placeholder="Your Name" required className="contact-input" />
-          <input type="email" placeholder="Your Email" required className="contact-input" />
-          <input type="text" placeholder="Subject" required className="contact-input" />
-          <textarea rows="5" placeholder="Your Message" required className="contact-input" />
+          <input type="text" name="name" placeholder="Your Name" required className="contact-input" />
+          <input type="email" name="email" placeholder="Your Email" required className="contact-input" />
+          <input type="text" name="subject" placeholder="Subject" required className="contact-input" />
+          <textarea name="message" rows="5" placeholder="Your Message" required className="contact-input" />
           
           <button 
             type="submit" 

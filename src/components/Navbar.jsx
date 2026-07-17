@@ -37,7 +37,7 @@ const Navbar = () => {
         pointerEvents: scrolled ? 'auto' : 'none',
         transition: 'opacity 0.3s ease'
       }}>
-        {userData.name.split(' ')[0]}<span style={{ color: 'var(--primary-glow)' }}>.</span>
+        {userData.name}<span style={{ color: 'var(--primary-glow)' }}>.</span>
       </a>
 
       {/* Desktop Nav */}

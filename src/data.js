@@ -3,7 +3,7 @@ export const userData = {
   role: "Master In Computer Application Student & Aspiring Software Developer",
   bio: "I am a passionate IT student focusing on web development, software engineering, and solving complex problems with modern technologies.",
   email: "adityaarundive@gmail.com",
-  location: "India",
+  location: "Nashik, Maharashtra, India",
   socials: {
     github: "https://github.com/AdityaDive08",
     linkedin: "https://www.linkedin.com/in/adityadive/"
