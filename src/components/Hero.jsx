@@ -44,14 +44,18 @@ const Hero = () => {
           </motion.div>
           
           <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px' }}>
-            {[FaGithub, FaLinkedin, FaTwitter].map((Icon, idx) => (
-              <a key={idx} href="#" style={{
+            {[
+              { Icon: FaGithub, link: userData.socials?.github || "#" },
+              { Icon: FaLinkedin, link: userData.socials?.linkedin || "#" },
+              { Icon: FaTwitter, link: userData.socials?.twitter || "#" }
+            ].map((item, idx) => (
+              <a key={idx} href={item.link} target={item.link !== "#" ? "_blank" : "_self"} rel="noreferrer" style={{
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
                 width: '45px', height: '45px', background: 'var(--bg-card)',
                 border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '50%',
                 color: 'var(--text-muted)', transition: 'var(--transition)'
               }} className="social-icon">
-                <Icon size={20} />
+                <item.Icon size={20} />
               </a>
             ))}
           </motion.div>

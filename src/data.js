@@ -4,6 +4,10 @@ export const userData = {
   bio: "I am a passionate IT student focusing on web development, software engineering, and solving complex problems with modern technologies.",
   email: "adityaarundive@gmail.com",
   location: "India",
+  socials: {
+    github: "https://github.com/AdityaDive08",
+    linkedin: "https://www.linkedin.com/in/adityadive/"
+  },
   stats: [
     { label: "Years of Study", value: "3+" },
     { label: "Projects Completed", value: "5+" },
