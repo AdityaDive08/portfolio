@@ -13,6 +13,24 @@ export const userData = {
     { label: "Projects Completed", value: "5+" },
     { label: "Certifications", value: "8" }
   ],
+  education: [
+    {
+      degree: "Master in Computer Application (MCA)",
+      institution: "MET Bhujbal Knowledge City Nashik"
+    },
+    {
+      degree: "Bachelors in Computer Science (BCS)",
+      institution: "RNC Arts, JDB Commerce and NSC Science(Bytco) Collage Nashik"
+    },
+    {
+      degree: "Higher Secondary Education (HSC)",
+      institution: "KRT Arts, BH Commerce and AM Science(KTHM) Collage Nashik"
+    },
+    {
+      degree: "Secondary School Education (SSC)",
+      institution: "ST Philomena Convent High School Nashik Road"
+    }
+  ],
   skills: {
     frontend: [
       { name: "HTML5", icon: "Layout" },

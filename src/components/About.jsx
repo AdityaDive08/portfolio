@@ -46,10 +46,115 @@ const About = () => {
             ))}
           </div>
         </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          style={{ marginTop: '80px', width: '100%' }}
+        >
+          <h3 style={{ fontSize: '2rem', marginBottom: '50px', textAlign: 'center' }}>Education</h3>
+          
+          <div className="timeline-container">
+            <div className="timeline-line"></div>
+            
+            {userData.education?.map((edu, index) => {
+              const isLeft = index % 2 === 0;
+              return (
+                <div key={index} className="timeline-item">
+                  <div className="timeline-dot"></div>
+                  <div className={`glass-panel timeline-content ${isLeft ? 'left' : 'right'}`}>
+                    <h4 style={{ fontSize: '1.2rem', color: '#fff', margin: '0 0 10px 0' }}>{edu.degree}</h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0 }}>{edu.institution}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
 
       <style>{`
         .stat-box:hover { transform: translateY(-5px) !important; border-color: var(--primary-glow); }
+        
+        .timeline-container {
+          position: relative;
+          width: 100%;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+        .timeline-line {
+          position: absolute;
+          left: 50%;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: rgba(37, 99, 235, 0.3);
+          transform: translateX(-50%);
+          z-index: 1;
+        }
+        .timeline-item {
+          width: 100%;
+          margin-bottom: 50px;
+          position: relative;
+          display: flex;
+          z-index: 2;
+        }
+        .timeline-item:last-child {
+          margin-bottom: 0;
+        }
+        .timeline-dot {
+          position: absolute;
+          left: 50%;
+          top: 30px;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: var(--primary-glow);
+          transform: translateX(-50%);
+          box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
+          border: 4px solid var(--bg-dark);
+          z-index: 3;
+        }
+        .timeline-content {
+          width: calc(50% - 40px);
+          padding: 30px;
+          transition: var(--transition);
+          text-align: left;
+        }
+        .timeline-content:hover {
+          border-color: rgba(37, 99, 235, 0.8) !important;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          transform: translateY(-3px);
+        }
+        .timeline-content.left {
+          border-right: 4px solid var(--primary-glow);
+          margin-left: 0;
+          margin-right: auto;
+        }
+        .timeline-content.right {
+          border-left: 4px solid var(--primary-glow);
+          margin-right: 0;
+          margin-left: auto;
+        }
+        
+        @media (max-width: 768px) {
+          .timeline-line {
+            left: 20px;
+            transform: none;
+          }
+          .timeline-dot {
+            left: 20px;
+            transform: translateX(-50%);
+          }
+          .timeline-content {
+            width: calc(100% - 60px);
+            margin-left: 60px !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-left: 4px solid var(--primary-glow) !important;
+          }
+        }
       `}</style>
     </section>
   );
