@@ -26,7 +26,7 @@ const About = () => {
             Currently pursuing my Master's Degree in Information Technology, I have developed a strong foundation in computer science principles and software development. I am constantly exploring new technologies and building projects to skillsUp.
           </p>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '40px' }}>
-            When I'm not coding, I enjoy participating in hackathons, contributing to open-source projects, and reading about the latest tech trends in artificial intelligence and web architecture.
+            When I'm not coding, I enjoy reading about the latest tech trends in artificial intelligence, web architecture and some core concepts.
           </p>
           
           <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>

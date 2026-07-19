@@ -1,7 +1,7 @@
 export const userData = {
   name: "Aditya Dive",
   role: "Master In Computer Application Student & Aspiring Software Developer",
-  bio: "I am a passionate IT student focusing on web development, software engineering, and solving complex problems with modern technologies.",
+  bio: "I am a passionate IT student focusing on Full Stack Development, and solving complex problems with modern technologies.",
   email: "adityaarundive@gmail.com",
   location: "Nashik, Maharashtra, India",
   socials: {
@@ -9,7 +9,7 @@ export const userData = {
     linkedin: "https://www.linkedin.com/in/adityadive/"
   },
   stats: [
-    { label: "Years of Study", value: "3+" },
+    { label: "Years of Study", value: "5+" },
     { label: "Projects Completed", value: "5+" },
     { label: "Certifications", value: "8" }
   ],
@@ -24,12 +24,12 @@ export const userData = {
     backend: [
       { name: "Node.js", icon: "Server" },
       { name: "Express.js", icon: "API" },
-      { name: "Python", icon: "Terminal" },
+      { name: "Java", icon: "FileCode" },
+      { name: "PHP", icon: "FileCode" },
       { name: "SQL", icon: "Database" },
       { name: "MongoDB", icon: "Database" },
       { name: "REST APIs", icon: "API" },
-      { name: "Java", icon: "FileCode" },
-      { name: "PHP", icon: "FileCode" },
+      { name: "Python", icon: "Terminal" },
       { name: "Kotlin", icon: "FileCode" }
     ],
     tools: [

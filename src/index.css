@@ -98,7 +98,7 @@ ul {
 .btn-primary {
   background: var(--gradient-accent);
   color: #fff;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 15px rgba(240, 240, 243, 0.4);
 }
 
 .btn-primary:hover {
