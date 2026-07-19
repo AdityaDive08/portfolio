@@ -55,8 +55,8 @@ const Skills = () => {
       </div>
 
       <style>{`
-        .skill-category:hover { border-color: rgba(99, 102, 241, 0.5); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); transform: translateY(-5px); }
-        .skill-tag:hover { background: rgba(99, 102, 241, 0.15); border-color: var(--primary-glow); color: #fff; transform: translateY(-2px); }
+        .skill-category:hover { border-color: rgba(37, 99, 235, 0.5); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); transform: translateY(-5px); }
+        .skill-tag:hover { background: rgba(37, 99, 235, 0.15); border-color: var(--primary-glow); color: #fff; transform: translateY(-2px); }
       `}</style>
     </section>
   );

@@ -38,7 +38,7 @@ const Projects = () => {
             <div style={{ padding: '25px' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
                 {project.tags.map(tag => (
-                  <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(6, 182, 212, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
+                  <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
                     {tag}
                   </span>
                 ))}
@@ -64,7 +64,7 @@ const Projects = () => {
       </div>
 
       <style>{`
-        .project-card:hover { transform: translateY(-10px) !important; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(99, 102, 241, 0.3); }
+        .project-card:hover { transform: translateY(-10px) !important; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(37, 99, 235, 0.3); }
         .project-card:hover .project-img { transform: scale(1.1); }
         .project-link:hover { color: var(--primary-glow); }
       `}</style>

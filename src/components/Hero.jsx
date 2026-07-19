@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { SiLeetcode } from 'react-icons/si';
 import { userData } from '../data';
 
 const Hero = () => {
@@ -39,7 +40,7 @@ const Hero = () => {
           </motion.p>
           
           <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
-            <a href="#projects" className="btn btn-primary">View My Work</a>
+            <a href="#projects" className="btn btn-outline">View My Work</a>
             <a href="#contact" className="btn btn-outline">Contact Me</a>
           </motion.div>
           
@@ -47,9 +48,11 @@ const Hero = () => {
             {[
               { Icon: FaGithub, link: userData.socials?.github || "#" },
               { Icon: FaLinkedin, link: userData.socials?.linkedin || "#" },
-              { Icon: FaTwitter, link: userData.socials?.twitter || "#" }
+              { Icon: SiLeetcode, link: "https://leetcode.com/u/adityadive2708/" },
+              { Icon: FaInstagram, link: "https://www.instagram.com/its_aditya_dive__/" },
+              { Icon: FaEnvelope, link: "mailto:adityaarundive@gmail.com" }
             ].map((item, idx) => (
-              <a key={idx} href={item.link} target={item.link !== "#" ? "_blank" : "_self"} rel="noreferrer" style={{
+              <a key={idx} href={item.link} target={(item.link !== "#" && !item.link.startsWith("mailto:")) ? "_blank" : "_self"} rel="noreferrer" style={{
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
                 width: '45px', height: '45px', background: 'var(--bg-card)',
                 border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '50%',
@@ -93,7 +96,7 @@ const Hero = () => {
               border: '5px solid var(--bg-dark)'
             }} 
             onError={(e) => {
-              e.target.src = "https://ui-avatars.com/api/?name=Aditya+Dive&size=512&background=18181b&color=06b6d4";
+              e.target.src = "https://ui-avatars.com/api/?name=Aditya+Dive&size=512&background=000000&color=3b82f6";
             }}
             />
           </div>

@@ -69,14 +69,14 @@ const Contact = () => {
           </p>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-            <div style={{ color: 'var(--primary-glow)', background: 'rgba(99, 102, 241, 0.1)', padding: '12px', borderRadius: '50%' }}>
+            <div style={{ color: 'var(--primary-glow)', background: 'rgba(37, 99, 235, 0.1)', padding: '12px', borderRadius: '50%' }}>
               <Mail size={24} />
             </div>
             <span>{userData.email}</span>
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-            <div style={{ color: 'var(--primary-glow)', background: 'rgba(99, 102, 241, 0.1)', padding: '12px', borderRadius: '50%' }}>
+            <div style={{ color: 'var(--primary-glow)', background: 'rgba(37, 99, 235, 0.1)', padding: '12px', borderRadius: '50%' }}>
               <MapPin size={24} />
             </div>
             <span>{userData.location}</span>
@@ -91,7 +91,7 @@ const Contact = () => {
           
           <button 
             type="submit" 
-            className="btn btn-primary" 
+            className="btn btn-outline" 
             disabled={status !== 'idle'}
             style={{ alignSelf: 'flex-start', background: status === 'sent' ? '#10b981' : '' }}
           >

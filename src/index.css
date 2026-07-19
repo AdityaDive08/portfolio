@@ -1,18 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg-dark: #09090b;
-  --bg-card: rgba(24, 24, 27, 0.6);
-  --bg-card-hover: rgba(39, 39, 42, 0.8);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
+  --bg-dark: #000000;
+  --bg-card: rgba(15, 15, 15, 0.6);
+  --bg-card-hover: rgba(26, 26, 26, 0.8);
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
   
-  --primary-glow: #6366f1; /* Indigo */
-  --secondary-glow: #06b6d4; /* Cyan */
+  --primary-glow: #2563eb; /* Blue */
+  --secondary-glow: #3b82f6; /* Lighter Blue */
   
   --gradient-accent: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow));
   
-  --font-heading: 'Outfit', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
   
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -35,8 +35,8 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   background-image: 
-      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
   background-attachment: fixed;
 }
 
@@ -61,6 +61,24 @@ a {
 
 ul {
   list-style: none;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  color: inherit;
+}
+
+.nav-link:hover {
+  background: var(--primary-glow);
+  color: #fff !important;
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  color: var(--primary-glow);
 }
 
 .section {
@@ -98,12 +116,12 @@ ul {
 .btn-primary {
   background: var(--gradient-accent);
   color: #fff;
-  box-shadow: 0 4px 15px rgba(240, 240, 243, 0.4);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
 }
 
 .btn-outline {
@@ -116,6 +134,7 @@ ul {
   background: var(--primary-glow);
   color: #fff;
   transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
 }
 
 .glass-panel {
