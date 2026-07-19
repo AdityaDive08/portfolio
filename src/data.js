@@ -16,19 +16,23 @@ export const userData = {
   education: [
     {
       degree: "Master in Computer Application (MCA)",
-      institution: "MET Bhujbal Knowledge City Nashik"
+      institution: "MET Bhujbal Knowledge City Nashik",
+      icon: "GraduationCap"
     },
     {
       degree: "Bachelors in Computer Science (BCS)",
-      institution: "RNC Arts, JDB Commerce and NSC Science(Bytco) Collage Nashik"
+      institution: "RNC Arts, JDB Commerce and NSC Science(Bytco) Collage Nashik",
+      icon: "Library"
     },
     {
       degree: "Higher Secondary Education (HSC)",
-      institution: "KRT Arts, BH Commerce and AM Science(KTHM) Collage Nashik"
+      institution: "KRT Arts, BH Commerce and AM Science(KTHM) Collage Nashik",
+      icon: "School"
     },
     {
       degree: "Secondary School Education (SSC)",
-      institution: "ST Philomena Convent High School Nashik Road"
+      institution: "ST Philomena Convent High School Nashik Road",
+      icon: "BookOpen"
     }
   ],
   skills: {

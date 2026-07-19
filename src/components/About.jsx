@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { userData } from '../data';
+import * as Icons from 'lucide-react';
 
 const About = () => {
   return (
@@ -54,16 +55,22 @@ const About = () => {
           transition={{ delay: 0.3 }}
           style={{ marginTop: '80px', width: '100%' }}
         >
-          <h3 style={{ fontSize: '2rem', marginBottom: '50px', textAlign: 'center' }}>Education</h3>
+          <div className="section-heading" style={{ marginBottom: '60px' }}>
+            <h2>My <span className="gradient-text">Qualifications</span></h2>
+          </div>
           
           <div className="timeline-container">
             <div className="timeline-line"></div>
             
             {userData.education?.map((edu, index) => {
               const isLeft = index % 2 === 0;
+              const IconComponent = edu.icon && Icons[edu.icon] ? Icons[edu.icon] : Icons.Circle;
+              
               return (
                 <div key={index} className="timeline-item">
-                  <div className="timeline-dot"></div>
+                  <div className="timeline-dot">
+                    <IconComponent size={18} />
+                  </div>
                   <div className={`glass-panel timeline-content ${isLeft ? 'left' : 'right'}`}>
                     <h4 style={{ fontSize: '1.2rem', color: '#fff', margin: '0 0 10px 0' }}>{edu.degree}</h4>
                     <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0 }}>{edu.institution}</p>
@@ -107,15 +114,19 @@ const About = () => {
         .timeline-dot {
           position: absolute;
           left: 50%;
-          top: 30px;
-          width: 18px;
-          height: 18px;
+          top: 25px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
-          background: var(--primary-glow);
+          background: var(--bg-dark);
+          color: var(--primary-glow);
           transform: translateX(-50%);
-          box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
-          border: 4px solid var(--bg-dark);
+          box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+          border: 2px solid var(--primary-glow);
           z-index: 3;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
         .timeline-content {
           width: calc(50% - 40px);
