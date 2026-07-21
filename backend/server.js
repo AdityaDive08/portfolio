@@ -21,11 +21,27 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-// Test DB Connection
+// Test DB Connection and Create Table
 pool.getConnection()
-  .then(connection => {
+  .then(async connection => {
     console.log('Connected to MySQL database!');
-    connection.release();
+    try {
+      await connection.query(`
+        CREATE TABLE IF NOT EXISTS contacts (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          email VARCHAR(255) NOT NULL,
+          subject VARCHAR(255) NOT NULL,
+          message TEXT NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      console.log('Contacts table is ready!');
+    } catch (tableErr) {
+      console.error('Error creating table:', tableErr);
+    } finally {
+      connection.release();
+    }
   })
   .catch(err => {
     console.error('Error connecting to MySQL database:', err.message);
