@@ -32,6 +32,9 @@ pool.getConnection()
   });
 
 // Routes
+app.get('/', (req, res) => {
+  res.status(200).send('Backend is running!');
+});
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
