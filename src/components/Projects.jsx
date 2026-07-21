@@ -16,7 +16,7 @@ const Projects = () => {
         <h2>Featured <span className="gradient-text">Projects</span></h2>
       </motion.div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
         {userData.projects.map((project, index) => (
           <motion.div 
             key={index}

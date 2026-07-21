@@ -48,7 +48,7 @@ const Skills = () => {
         <h2>Technical <span className="gradient-text">Skills</span></h2>
       </motion.div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
         <SkillCategory title="Frontend" skills={userData.skills.frontend} delay={0.1} />
         <SkillCategory title="Backend & Database" skills={userData.skills.backend} delay={0.3} />
         <SkillCategory title="Tools & Others" skills={userData.skills.tools} delay={0.5} />

@@ -17,7 +17,9 @@ export const userData = {
     {
       degree: "Master in Computer Application (MCA)",
       institution: "MET Bhujbal Knowledge City Nashik",
-      icon: "GraduationCap"
+      icon: "GraduationCap",
+      cgpa: "7.28",
+      duration: "Aug 2024 - July 2026"
     },
     {
       degree: "Bachelors in Computer Science (BCS)",

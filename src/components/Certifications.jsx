@@ -15,7 +15,7 @@ const Certifications = () => {
         <h2>My <span className="gradient-text">Certifications</span></h2>
       </motion.div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
         {userData.certifications.map((cert, idx) => (
           <motion.div 
             key={idx}

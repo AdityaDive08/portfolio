@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { userData } from '../data';
@@ -7,6 +8,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [showResumeModal, setShowResumeModal] = useState(false);
 
   const navLinks = ['Home', 'About', 'Qualification', 'Skills', 'Projects', 'Certifications', 'Contact'];
 
@@ -80,9 +82,9 @@ const Navbar = () => {
           );
         })}
         <li>
-          <a href="/Aditya_Dive_Resume.pdf" download="Aditya_Dive_Resume.pdf" className="btn btn-outline" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>
+          <button onClick={() => setShowResumeModal(true)} className="btn btn-outline" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>
             Resume
-          </a>
+          </button>
         </li>
       </ul>
 
@@ -132,18 +134,70 @@ const Navbar = () => {
                 </a>
               );
             })}
-            <a 
-              href="/Aditya_Dive_Resume.pdf" 
-              download="Aditya_Dive_Resume.pdf" 
-              onClick={() => setIsOpen(false)}
+            <button 
+              onClick={() => {
+                setIsOpen(false);
+                setShowResumeModal(true);
+              }}
               className="btn btn-outline"
               style={{ marginTop: '10px', padding: '10px 25px' }}
             >
               Resume
-            </a>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Resume Modal */}
+      {createPortal(
+        <AnimatePresence>
+          {showResumeModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(0, 0, 0, 0.8)', backdropFilter: 'blur(5px)',
+                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                zIndex: 2000
+              }}
+              onClick={() => setShowResumeModal(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                style={{
+                  background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.1)',
+                  padding: '40px', borderRadius: '20px', textAlign: 'center',
+                  maxWidth: '400px', width: '90%'
+                }}
+                onClick={e => e.stopPropagation()}
+              >
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '15px' }}>Want my Resume?</h3>
+                {/* <p style={{ color: 'var(--text-muted)', marginBottom: '30px' }}>
+                  Click download to get a copy of my latest resume.
+                </p> */}
+                <div style={{ display: 'flex', gap: '15px', justifyElement: 'center', justifyContent: 'center' }}>
+                  <button onClick={() => setShowResumeModal(false)} className="btn btn-outline">
+                    Cancel
+                  </button>
+                  <a 
+                    href="/Aditya_Dive_Resume.pdf" 
+                    download="Aditya_Dive_Resume.pdf" 
+                    onClick={() => setShowResumeModal(false)}
+                    className="btn btn-primary"
+                  >
+                    Download
+                  </a>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </nav>
   );
 };

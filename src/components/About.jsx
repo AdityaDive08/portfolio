@@ -5,6 +5,7 @@ import * as Icons from 'lucide-react';
 
 const About = () => {
   return (
+    <>
     <section id="about" className="section">
       <motion.div 
         className="section-heading"
@@ -15,7 +16,7 @@ const About = () => {
         <h2>About <span className="gradient-text">Me</span></h2>
       </motion.div>
       
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -48,39 +49,6 @@ const About = () => {
           </div>
         </motion.div>
 
-        <motion.div 
-          id="qualification"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          style={{ marginTop: '80px', width: '100%' }}
-        >
-          <div className="section-heading" style={{ marginBottom: '60px' }}>
-            <h2>My <span className="gradient-text">Qualifications</span></h2>
-          </div>
-          
-          <div className="timeline-container">
-            <div className="timeline-line"></div>
-            
-            {userData.education?.map((edu, index) => {
-              const isLeft = index % 2 === 0;
-              const IconComponent = edu.icon && Icons[edu.icon] ? Icons[edu.icon] : Icons.Circle;
-              
-              return (
-                <div key={index} className="timeline-item">
-                  <div className="timeline-dot">
-                    <IconComponent size={18} />
-                  </div>
-                  <div className={`glass-panel timeline-content ${isLeft ? 'left' : 'right'}`}>
-                    <h4 style={{ fontSize: '1.2rem', color: '#fff', margin: '0 0 10px 0' }}>{edu.degree}</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0 }}>{edu.institution}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </motion.div>
       </div>
 
       <style>{`
@@ -89,7 +57,7 @@ const About = () => {
         .timeline-container {
           position: relative;
           width: 100%;
-          max-width: 900px;
+          max-width: 1200px;
           margin: 0 auto;
         }
         .timeline-line {
@@ -151,7 +119,7 @@ const About = () => {
           margin-left: auto;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 991px) {
           .timeline-line {
             left: 20px;
             transform: none;
@@ -169,6 +137,54 @@ const About = () => {
         }
       `}</style>
     </section>
+    
+    <section id="qualification" className="section">
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          style={{ width: '100%' }}
+        >
+          <div className="section-heading" style={{ marginBottom: '60px' }}>
+            <h2>My <span className="gradient-text">Qualifications</span></h2>
+          </div>
+          
+          <div className="timeline-container">
+            <div className="timeline-line"></div>
+            
+            {userData.education?.map((edu, index) => {
+              const isLeft = index % 2 === 0;
+              const IconComponent = edu.icon && Icons[edu.icon] ? Icons[edu.icon] : Icons.Circle;
+              
+              return (
+                <div key={index} className="timeline-item">
+                  <div className="timeline-dot">
+                    <IconComponent size={18} />
+                  </div>
+                  <div className={`glass-panel timeline-content ${isLeft ? 'left' : 'right'}`}>
+                    <h4 style={{ fontSize: '1.2rem', color: '#fff', margin: '0 0 10px 0' }}>{edu.degree}</h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: '0 0 5px 0' }}>{edu.institution}</p>
+                    {edu.duration && (
+                      <p style={{ color: 'var(--primary-glow)', fontSize: '0.85rem', fontWeight: 600, margin: '0 0 5px 0' }}>
+                        {edu.duration}
+                      </p>
+                    )}
+                    {edu.cgpa && (
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
+                        <strong>CGPA:</strong> {edu.cgpa}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+    </>
   );
 };
 
