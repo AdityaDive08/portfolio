@@ -70,7 +70,7 @@ app.post('/api/contact', async (req, res) => {
     });
   } catch (error) {
     console.error('Error saving contact:', error);
-    res.status(500).json({ error: 'Failed to send message. Please try again later.' });
+    res.status(500).json({ error: error.message || 'Failed to send message. Please try again later.' });
   }
 });
 
