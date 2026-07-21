@@ -21,7 +21,7 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-// Test DB Connection and Create Table
+// Test DB Connection and Create/Fix Table
 pool.getConnection()
   .then(async connection => {
     console.log('Connected to MySQL database!');
@@ -36,9 +36,13 @@ pool.getConnection()
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
       `);
+      // Fix for "Field 'id' doesn't have a default value" if the user created it manually without AUTO_INCREMENT
+      await connection.query(`
+        ALTER TABLE contacts MODIFY COLUMN id INT AUTO_INCREMENT
+      `);
       console.log('Contacts table is ready!');
     } catch (tableErr) {
-      console.error('Error creating table:', tableErr);
+      console.error('Error creating/fixing table:', tableErr);
     } finally {
       connection.release();
     }
