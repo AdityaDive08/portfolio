@@ -114,13 +114,13 @@ I'm currently focused on:
 
 ## 📬 Contact
 
-📧 Email: your-email@example.com
+📧 Email: adityaarundive@gmail.com
 
-💼 LinkedIn: https://linkedin.com/in/your-profile
+💼 LinkedIn: https://www.linkedin.com/in/adityadive/
 
-🐙 GitHub: https://github.com/your-username
+🐙 GitHub: https://github.com/AdityaDive08/
 
-🌐 Portfolio: https://your-portfolio-link.vercel.app
+🌐 Portfolio: https://adityadive.vercel.app/
 
 ---
 
