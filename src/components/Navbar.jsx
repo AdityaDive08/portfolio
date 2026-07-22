@@ -40,8 +40,8 @@ const Navbar = () => {
       
       // Trigger download
       const link = document.createElement('a');
-      link.href = '/Aditya_Dive_Resume.pdf';
-      link.download = 'Aditya_Dive_Resume.pdf';
+      link.href = '/AdityaDive_Resume.pdf';
+      link.download = 'AdityaDive_Resume.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
