@@ -103,10 +103,18 @@ export const userData = {
       github: "https://github.com/AdityaDive08/HealthFreak",
       demo: null
     },
-   {
+    {
       title: "AI-Powered-Mock-Interview",
       description: "The AI Powered Mock Interview system is an intelligent web-based application developed as a Mini Project during my Master's program. This platform simulates real interview scenarios using AI-driven logic to help users prepare effectively for technical and behavioral interviews",
-      image: "/aimockinterview.png",
+      images: [
+        "/mockinterview/img 1.png",
+        "/mockinterview/img 2.png",
+        "/mockinterview/img 3.png",
+        "/mockinterview/img 4.png",
+        "/mockinterview/img 5.png",
+        "/mockinterview/img 6.png",
+        "/mockinterview/img 7.png"
+      ],
       tags: ["HTML/CSS", "PHP", "MySQL"],
       github: "https://github.com/AdityaDive08/AI-Powered-Mock-Interview",
       demo: "#"
