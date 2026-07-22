@@ -78,10 +78,14 @@ export const userData = {
     ]
   },
   projects: [
-     {
+    {
       title: "SteelMart",
       description: "SteelMart CRM is a MERN stack Customer Relationship Management (CRM) application developed during my internship to streamline customer, vendor, and sales operations in the steel industry. The system enables efficient management of leads, customers, quotations, orders, and invoices through a centralized dashboard. It features secure authentication, role-based access control, and RESTful APIs for seamless business workflow management.",
-      image: "/steelmart.png",
+      images: [
+        "/steelmart/img 1.png", "/steelmart/img 2.png", "/steelmart/img 3.png", 
+        "/steelmart/img 4.png", "/steelmart/img 5.png", "/steelmart/img 6.png", 
+        "/steelmart/img 7.png", "/steelmart/img 8.png", "/steelmart/img 9.png"
+      ],
       tags: ["ReactJS", "NodeJS","ExpressJS","MySQL"],
       github: "https://github.com/AdityaDive08/SteelMart.git",
       demo: "#"
