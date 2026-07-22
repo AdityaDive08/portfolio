@@ -4,7 +4,7 @@ A modern and interactive portfolio website showcasing my projects, technical ski
 
 ## 🌐 Live Demo
 
-🔗 https://your-portfolio-link.vercel.app
+🔗 https://adityadive.vercel.app/
 
 ---
 
