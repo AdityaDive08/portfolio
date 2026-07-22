@@ -25,11 +25,9 @@ const About = () => {
         >
           <h3 style={{ fontSize: '2rem', marginBottom: '20px' }}>My Journey in Tech</h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '20px' }}>
-            Currently pursuing my Master's Degree in Information Technology, I have developed a strong foundation in computer science principles and software development. I am constantly exploring new technologies and building projects to skillsUp.
-          </p>
+            I'm currently pursuing a Master's degree in Information Technology with a passion for building modern web applications and solving real-world problems through technology. I enjoy turning ideas into practical, user-friendly solutions while continuously improving my development skills.          </p>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '40px' }}>
-            When I'm not coding, I enjoy reading about the latest tech trends in artificial intelligence, web architecture and some core concepts.
-          </p>
+            Beyond coding, I stay updated with the latest trends in artificial intelligence, cloud computing, system design, and web technologies. I believe in continuous learning and enjoy taking on new challenges that help me grow as a software developer.          </p>
           
           <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
             {userData.stats.map((stat, index) => (
@@ -119,6 +117,30 @@ const About = () => {
           margin-left: auto;
         }
         
+        .project-redirect {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          color: var(--text-muted);
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        
+        .project-redirect:hover {
+          color: var(--primary-glow);
+        }
+        
+        .project-redirect .redirect-arrow {
+          opacity: 0;
+          transform: translateX(-5px);
+          transition: all 0.3s ease;
+        }
+        
+        .project-redirect:hover .redirect-arrow {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        
         @media (max-width: 991px) {
           .timeline-line {
             left: 20px;
@@ -164,8 +186,8 @@ const About = () => {
                     <IconComponent size={18} />
                   </div>
                   <div className={`glass-panel timeline-content ${isLeft ? 'left' : 'right'}`}>
-                    <h4 style={{ fontSize: '1.2rem', color: '#fff', margin: '0 0 10px 0' }}>{edu.degree}</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: '0 0 5px 0' }}>{edu.institution}</p>
+                    <h4 style={{ fontSize: '1.2rem', color: '#fff', margin: '0 0 10px 0' }}>{edu.degree || edu.role}</h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: '0 0 5px 0' }}>{edu.institution || edu.company}</p>
                     {edu.duration && (
                       <p style={{ color: 'var(--primary-glow)', fontSize: '0.85rem', fontWeight: 600, margin: '0 0 5px 0' }}>
                         {edu.duration}
@@ -174,6 +196,14 @@ const About = () => {
                     {edu.cgpa && (
                       <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
                         <strong>CGPA:</strong> {edu.cgpa}
+                      </p>
+                    )}
+                    {edu.project && (
+                      <p style={{ margin: 0, fontSize: '0.9rem' }}>
+                        <a href="#projects" className="project-redirect">
+                          <strong>Project:</strong> {edu.project}
+                          <Icons.ArrowRight size={14} className="redirect-arrow" />
+                        </a>
                       </p>
                     )}
                   </div>

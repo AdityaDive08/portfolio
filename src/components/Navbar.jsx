@@ -9,8 +9,51 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const [resumeForm, setResumeForm] = useState({ companyName: '', email: '' });
+  const [resumeLoading, setResumeLoading] = useState(false);
+  const [resumeError, setResumeError] = useState('');
 
   const navLinks = ['Home', 'About', 'Qualification', 'Skills', 'Projects', 'Certifications', 'Contact'];
+
+  const handleResumeDownload = async (e) => {
+    e.preventDefault();
+    if (!resumeForm.companyName.trim()) {
+      setResumeError('Company Name is mandatory');
+      return;
+    }
+    
+    setResumeLoading(true);
+    setResumeError('');
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${API_URL}/api/resume-download`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(resumeForm),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit details');
+      }
+      
+      // Trigger download
+      const link = document.createElement('a');
+      link.href = '/Aditya_Dive_Resume.pdf';
+      link.download = 'Aditya_Dive_Resume.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      setShowResumeModal(false);
+      setResumeForm({ companyName: '', email: '' });
+    } catch (err) {
+      setResumeError(err.message);
+    } finally {
+      setResumeLoading(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -170,28 +213,52 @@ const Navbar = () => {
                 exit={{ scale: 0.8, opacity: 0 }}
                 style={{
                   background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.1)',
-                  padding: '40px', borderRadius: '20px', textAlign: 'center',
+                  padding: '30px', borderRadius: '20px', textAlign: 'center',
                   maxWidth: '400px', width: '90%'
                 }}
                 onClick={e => e.stopPropagation()}
               >
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '15px' }}>Want my Resume?</h3>
-                {/* <p style={{ color: 'var(--text-muted)', marginBottom: '30px' }}>
-                  Click download to get a copy of my latest resume.
-                </p> */}
-                <div style={{ display: 'flex', gap: '15px', justifyElement: 'center', justifyContent: 'center' }}>
-                  <button onClick={() => setShowResumeModal(false)} className="btn btn-outline">
-                    Cancel
-                  </button>
-                  <a 
-                    href="/Aditya_Dive_Resume.pdf" 
-                    download="Aditya_Dive_Resume.pdf" 
-                    onClick={() => setShowResumeModal(false)}
-                    className="btn btn-primary"
-                  >
-                    Download
-                  </a>
-                </div>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Want my Resume?</h3>
+                <form onSubmit={handleResumeDownload} style={{ display: 'flex', flexDirection: 'column', gap: '15px', textAlign: 'left' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Company Name *</label>
+                    <input 
+                      type="text" 
+                      value={resumeForm.companyName}
+                      onChange={(e) => setResumeForm({...resumeForm, companyName: e.target.value})}
+                      style={{ 
+                        width: '100%', padding: '10px', borderRadius: '8px', 
+                        background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+                        color: '#fff'
+                      }}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Email (Optional)</label>
+                    <input 
+                      type="email" 
+                      value={resumeForm.email}
+                      onChange={(e) => setResumeForm({...resumeForm, email: e.target.value})}
+                      style={{ 
+                        width: '100%', padding: '10px', borderRadius: '8px', 
+                        background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+                        color: '#fff'
+                      }}
+                    />
+                  </div>
+                  {resumeError && (
+                    <p style={{ color: '#ff4d4d', fontSize: '0.85rem', margin: '0' }}>{resumeError}</p>
+                  )}
+                  <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '10px' }}>
+                    <button type="button" onClick={() => setShowResumeModal(false)} className="btn btn-outline" disabled={resumeLoading}>
+                      Cancel
+                    </button>
+                    <button type="submit" className="btn btn-primary" disabled={resumeLoading}>
+                      {resumeLoading ? 'Loading...' : 'Download'}
+                    </button>
+                  </div>
+                </form>
               </motion.div>
             </motion.div>
           )}

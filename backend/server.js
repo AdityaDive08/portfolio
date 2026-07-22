@@ -41,6 +41,16 @@ pool.getConnection()
         ALTER TABLE contacts MODIFY COLUMN id INT AUTO_INCREMENT
       `);
       console.log('Contacts table is ready!');
+
+      await connection.query(`
+        CREATE TABLE IF NOT EXISTS resume_downloads (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          company_name VARCHAR(255) NOT NULL,
+          email VARCHAR(255) NOT NULL,
+          downloaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      console.log('Resume downloads table is ready!');
     } catch (tableErr) {
       console.error('Error creating/fixing table:', tableErr);
     } finally {
@@ -75,6 +85,39 @@ app.post('/api/contact', async (req, res) => {
   } catch (error) {
     console.error('Error saving contact:', error);
     res.status(500).json({ error: error.message || 'Failed to send message. Please try again later.' });
+  }
+});
+
+app.post('/api/resume-download', async (req, res) => {
+  try {
+    const { companyName, email } = req.body;
+    
+    if (!companyName) {
+      return res.status(400).json({ error: 'Company Name is required' });
+    }
+
+    const query = 'INSERT INTO resume_downloads (company_name, email) VALUES (?, ?)';
+    const [result] = await pool.execute(query, [companyName, email || '']);
+
+    res.status(201).json({ 
+      success: true, 
+      message: 'Details saved successfully!',
+      id: result.insertId 
+    });
+  } catch (error) {
+    console.error('Error saving resume download details:', error);
+    res.status(500).json({ error: error.message || 'Failed to save details. Please try again later.' });
+  }
+});
+
+app.get('/api/resume-downloads', async (req, res) => {
+  try {
+    const query = 'SELECT * FROM resume_downloads ORDER BY downloaded_at DESC';
+    const [rows] = await pool.execute(query);
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error fetching resume downloads:', error);
+    res.status(500).json({ error: error.message || 'Failed to fetch details.' });
   }
 });
 

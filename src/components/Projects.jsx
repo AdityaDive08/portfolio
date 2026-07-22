@@ -16,7 +16,7 @@ const Projects = () => {
         <h2>Featured <span className="gradient-text">Projects</span></h2>
       </motion.div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
+      <div className="projects-grid">
         {userData.projects.map((project, index) => (
           <motion.div 
             key={index}
@@ -43,7 +43,7 @@ const Projects = () => {
                   </span>
                 ))}
               </div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>{project.title}</h3>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '10px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '20px' }}>{project.description}</p>
               
               <div style={{ display: 'flex', gap: '15px' }}>
@@ -64,6 +64,21 @@ const Projects = () => {
       </div>
 
       <style>{`
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 40px;
+        }
+        @media (max-width: 1024px) {
+          .projects-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        @media (max-width: 768px) {
+          .projects-grid {
+            grid-template-columns: 1fr;
+          }
+        }
         .project-card:hover { transform: translateY(-10px) !important; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(37, 99, 235, 0.3); }
         .project-card:hover .project-img { transform: scale(1.1); }
         .project-link:hover { color: var(--primary-glow); }

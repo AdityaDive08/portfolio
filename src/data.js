@@ -14,6 +14,13 @@ export const userData = {
     { label: "Certifications", value: "8" }
   ],
   education: [
+     {
+      role: "Intern Software Developer",
+      company: "Aquil Tech Labs",
+      icon: "Briefcase",
+      project: "SteelMart",
+      duration: "Jan 2026 - Jun 2026"
+    },
     {
       degree: "Master in Computer Application (MCA)",
       institution: "MET Bhujbal Knowledge City Nashik",
@@ -24,17 +31,23 @@ export const userData = {
     {
       degree: "Bachelors in Computer Science (BCS)",
       institution: "RNC Arts, JDB Commerce and NSC Science(Bytco) Collage Nashik",
-      icon: "Library"
+      icon: "Library",
+      cgpa: "7.31",
+      duration: "Sep 2021 - April 2024"
     },
     {
       degree: "Higher Secondary Education (HSC)",
       institution: "KRT Arts, BH Commerce and AM Science(KTHM) Collage Nashik",
-      icon: "School"
+      icon: "School",
+      cgpa: "73.00",
+      duration: "July 2021"
     },
     {
       degree: "Secondary School Education (SSC)",
       institution: "ST Philomena Convent High School Nashik Road",
-      icon: "BookOpen"
+      icon: "BookOpen",
+      cgpa: "70.40",
+      duration: "March 2019"
     }
   ],
   skills: {
@@ -74,7 +87,7 @@ export const userData = {
       demo: "#"
     },
     {
-      title: "AI-Voice Assistent(HealthFreak)",
+      title: "AI Voice Assistant (HealthFreak)",
       description: "HealthFreak is an AI-powered healthcare platform that combines a smart medical assistant with real-time health tracking. Users can consult an AI through voice or text, monitor vital health metrics, visualize their progress with interactive dashboards, and access emergency SOS and nearby hospital services.",
       image: "/helthfreak.png",
       tags: ["NextJS", "NodeJS","PostgreSQL"],
