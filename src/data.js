@@ -52,15 +52,15 @@ export const userData = {
   ],
   skills: {
     frontend: [
-      { name: "HTML5", icon: "Layout" },
-      { name: "CSS3", icon: "Palette" },
+      { name: "HTML/CSS", icon: "Layout" },
+      // { name: "CSS3", icon: "Palette" },
       { name: "JavaScript", icon: "FileCode" },
-      { name: "React.js", icon: "Atom" },
+      { name: "ReactJS", icon: "Atom" },
       { name: "Tailwind CSS", icon: "Wind" }
     ],
     backend: [
-      { name: "Node.js", icon: "Server" },
-      { name: "Express.js", icon: "API" },
+      { name: "NodeJS", icon: "Server" },
+      { name: "ExpressJS", icon: "API" },
       { name: "Java", icon: "FileCode" },
       { name: "PHP", icon: "FileCode" },
       { name: "SQL", icon: "Database" },
@@ -98,7 +98,7 @@ export const userData = {
       title: "AI-Powered-Mock-Interview",
       description: "The AI Powered Mock Interview system is an intelligent web-based application developed as a Mini Project during my Master's program. This platform simulates real interview scenarios using AI-driven logic to help users prepare effectively for technical and behavioral interviews",
       image: "/aimockinterview.png",
-      tags: ["HTMl /CSS", "PHP", "MySQL"],
+      tags: ["HTML/CSS", "PHP", "MySQL"],
       github: "https://github.com/AdityaDive08/AI-Powered-Mock-Interview",
       demo: "#"
     },

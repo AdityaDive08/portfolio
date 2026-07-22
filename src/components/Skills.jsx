@@ -4,37 +4,54 @@ import * as Icons from 'lucide-react';
 import * as FaIcons from 'react-icons/fa';
 import { userData } from '../data';
 
-const SkillCategory = ({ title, skills, delay }) => (
-  <motion.div 
-    className="glass-panel skill-category"
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay, duration: 0.5 }}
-    style={{ padding: '30px', transition: 'var(--transition)' }}
-  >
-    <h3 style={{ fontSize: '1.5rem', marginBottom: '25px', position: 'relative', paddingBottom: '10px' }}>
-      {title}
-      <span style={{ position: 'absolute', bottom: 0, left: 0, width: '50px', height: '3px', background: 'var(--gradient-accent)', borderRadius: '3px' }} />
-    </h3>
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-      {skills.map((skill, idx) => {
-        const Icon = Icons[skill.icon] || FaIcons[skill.icon] || Icons.Code;
-        return (
-          <div key={idx} className="skill-tag" style={{
-            display: 'flex', alignItems: 'center', gap: '8px',
-            background: 'rgba(255, 255, 255, 0.05)', padding: '10px 18px',
-            borderRadius: '30px', fontSize: '0.95rem', fontWeight: 500,
-            border: '1px solid rgba(255, 255, 255, 0.02)', transition: 'var(--transition)'
-          }}>
-            <Icon size={18} style={{ color: 'var(--secondary-glow)' }} />
-            {skill.name}
-          </div>
-        );
-      })}
-    </div>
-  </motion.div>
-);
+const SkillCategory = ({ title, skills, delay }) => {
+  const handleSkillClick = (skillName) => {
+    window.dispatchEvent(new CustomEvent('filterProjects', { detail: skillName }));
+    window.location.hash = '#projects';
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <motion.div 
+      className="glass-panel skill-category"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.5 }}
+      style={{ padding: '30px', transition: 'var(--transition)' }}
+    >
+      <h3 style={{ fontSize: '1.5rem', marginBottom: '25px', position: 'relative', paddingBottom: '10px' }}>
+        {title}
+        <span style={{ position: 'absolute', bottom: 0, left: 0, width: '50px', height: '3px', background: 'var(--gradient-accent)', borderRadius: '3px' }} />
+      </h3>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+        {skills.map((skill, idx) => {
+          const Icon = Icons[skill.icon] || FaIcons[skill.icon] || Icons.Code;
+          return (
+            <div 
+              key={idx} 
+              className="skill-tag" 
+              onClick={() => handleSkillClick(skill.name)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '8px',
+                background: 'rgba(255, 255, 255, 0.05)', padding: '10px 18px',
+                borderRadius: '30px', fontSize: '0.95rem', fontWeight: 500,
+                border: '1px solid rgba(255, 255, 255, 0.02)', transition: 'var(--transition)',
+                cursor: 'pointer'
+              }}
+            >
+              <Icon size={18} style={{ color: 'var(--secondary-glow)' }} />
+              {skill.name}
+            </div>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+};
 
 const Skills = () => {
   return (
