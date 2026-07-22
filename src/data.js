@@ -93,7 +93,12 @@ export const userData = {
     {
       title: "AI Voice Assistant (HealthFreak)",
       description: "HealthFreak is an AI-powered healthcare platform that combines a smart medical assistant with real-time health tracking. Users can consult an AI through voice or text, monitor vital health metrics, visualize their progress with interactive dashboards, and access emergency SOS and nearby hospital services.",
-      image: "/helthfreak.png",
+      images: [
+        "/HealthFreak/img 1.png",
+        "/HealthFreak/img 2.png",
+        "/HealthFreak/img 3.png",
+        "/HealthFreak/img 4.png"
+      ],
       tags: ["NextJS", "NodeJS","PostgreSQL"],
       github: "https://github.com/AdityaDive08/HealthFreak",
       demo: null

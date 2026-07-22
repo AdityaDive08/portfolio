@@ -208,7 +208,6 @@ const Projects = () => {
           }
         }
         .project-card:hover { transform: translateY(-10px) !important; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(37, 99, 235, 0.3); }
-        .project-card:hover .project-img { transform: scale(1.1); }
         .project-link:hover { color: var(--primary-glow); }
       `}</style>
     </section>
