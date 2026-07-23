@@ -122,7 +122,15 @@ export const userData = {
     {
       title: "HealthFreak-Application",
       description: "HealthFreak is an AI-powered healthcare application available on both web and Android. It enables users to consult an AI medical assistant, track vital health metrics, access emergency SOS services, and locate nearby hospitals through a secure, intuitive, and modern healthcare platform.",
-      image: "/application.png",
+      images: [
+        "/healthfreak app/img 1.png",
+        "/healthfreak app/img 2.png",
+        "/healthfreak app/img 3.png",
+        "/healthfreak app/img 4.png",
+        "/healthfreak app/img 5.png",
+        "/healthfreak app/img 6.png"
+      ],
+      imageFit: "contain",
       tags: ["Kotlin", "NodeJS","MySQL"],
       github: "https://github.com/AdityaDive08/HealthFreak-Application",
       demo: "#"
@@ -145,7 +153,13 @@ export const userData = {
     {
       title: "Pharmacy Management System",
       description: "Pharmacy Management System is a web-based application that streamlines pharmacy operations by managing medicine inventory, sales, billing, and customer records. It provides an intuitive interface for tracking stock, monitoring expiry dates, and generating invoices, helping improve efficiency and reduce manual work.",
-      image: "/pharmacymanagementsystem.png",
+      images: [
+        "/pharmacy/img 1.png",
+        "/pharmacy/img 2.png",
+        "/pharmacy/img 3.png",
+        "/pharmacy/img 4.png",
+        "/pharmacy/img 5.png"
+      ],
       tags: ["HTML /CSS", "PHP", "MySQL"],
       github: "https://github.com/AdityaDive08/Pharmacy-Management-System",
       demo: "#"

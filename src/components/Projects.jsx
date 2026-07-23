@@ -4,7 +4,7 @@ import { ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { userData } from '../data';
 
-const ImageCarousel = ({ images, title, isHovered }) => {
+const ImageCarousel = ({ images, title, isHovered, imageFit = 'cover' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
 
@@ -42,7 +42,7 @@ const ImageCarousel = ({ images, title, isHovered }) => {
         src={images[currentIndex]} 
         alt={title} 
         className="project-img"
-        style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} 
+        style={{ width: '100%', height: '100%', objectFit: imageFit, backgroundColor: imageFit === 'contain' ? 'rgba(0,0,0,0.2)' : 'transparent', transition: 'transform 0.5s ease' }} 
       />
       {images.length > 1 && isHovered && (
         <>
@@ -86,6 +86,7 @@ const ProjectCard = ({ project, index }) => {
         images={project.images || [project.image]} 
         title={project.title} 
         isHovered={isHovered}
+        imageFit={project.imageFit}
       />
       <div style={{ padding: '25px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
