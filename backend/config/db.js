@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
+const logger = require('../utils/logger');
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -14,7 +15,7 @@ const pool = mysql.createPool({
 const initializeDatabase = async () => {
   try {
     const connection = await pool.getConnection();
-    console.log('Connected to MySQL database!');
+    logger.info('Connected to MySQL database!');
     
     // Create/Fix Contacts Table
     await connection.query(`
@@ -28,7 +29,7 @@ const initializeDatabase = async () => {
       )
     `);
     await connection.query(`ALTER TABLE contacts MODIFY COLUMN id INT AUTO_INCREMENT`);
-    // console.log('Contacts table is ready!');
+    logger.info('Contacts table is ready!');
 
     // Create/Fix Resume Downloads Table
     await connection.query(`
@@ -39,11 +40,11 @@ const initializeDatabase = async () => {
         downloaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    // console.log('Resume downloads table is ready!');
+    logger.info('Resume downloads table is ready!');
     
     connection.release();
   } catch (err) {
-    console.error('Error connecting to MySQL database:', err.message);
+    logger.error(`Error connecting to MySQL database: ${err.message}`);
   }
 };
 

@@ -1,4 +1,5 @@
 const ResumeDownload = require('../models/ResumeDownload');
+const logger = require('../utils/logger');
 
 const trackDownload = async (req, res) => {
   try {
@@ -16,7 +17,7 @@ const trackDownload = async (req, res) => {
       id: result.insertId 
     });
   } catch (error) {
-    console.error('Error saving resume download details:', error);
+    logger.error(`Error saving resume download details: ${error.message}`);
     res.status(500).json({ error: error.message || 'Failed to save details. Please try again later.' });
   }
 };
@@ -26,7 +27,7 @@ const getDownloads = async (req, res) => {
     const rows = await ResumeDownload.getAll();
     res.status(200).json(rows);
   } catch (error) {
-    console.error('Error fetching resume downloads:', error);
+    logger.error(`Error fetching resume downloads: ${error.message}`);
     res.status(500).json({ error: error.message || 'Failed to fetch details.' });
   }
 };

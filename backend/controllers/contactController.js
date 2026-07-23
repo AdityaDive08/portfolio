@@ -1,5 +1,6 @@
 const Contact = require('../models/Contact');
 const nodemailer = require('nodemailer');
+const logger = require('../utils/logger');
 
 // Nodemailer Transporter Setup
 const transporter = nodemailer.createTransport({
@@ -43,10 +44,10 @@ const submitContact = async (req, res) => {
 
     try {
       // Send both emails asynchronously
-      transporter.sendMail(mailToSender).catch(console.error);
-      transporter.sendMail(mailToAditya).catch(console.error);
+      transporter.sendMail(mailToSender).catch(err => logger.error(`Error sending auto-reply: ${err.message}`));
+      transporter.sendMail(mailToAditya).catch(err => logger.error(`Error sending notification: ${err.message}`));
     } catch (mailErr) {
-      console.error('Error sending emails:', mailErr);
+      logger.error(`Error initiating email sending: ${mailErr.message}`);
     }
 
     res.status(201).json({ 
@@ -55,7 +56,7 @@ const submitContact = async (req, res) => {
       id: result.insertId 
     });
   } catch (error) {
-    console.error('Error saving contact:', error);
+    logger.error(`Error saving contact: ${error.message}`);
     res.status(500).json({ error: error.message || 'Failed to send message. Please try again later.' });
   }
 };
