@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const port = 5000;
@@ -9,6 +10,15 @@ const port = 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Nodemailer Transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // You can change this if you are not using Gmail
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 // Database connection pool
 const pool = mysql.createPool({
@@ -76,6 +86,33 @@ app.post('/api/contact', async (req, res) => {
 
     const query = 'INSERT INTO contacts (name, email, subject, message) VALUES (?, ?, ?, ?)';
     const [result] = await pool.execute(query, [name, email, subject, message]);
+
+    // Extract first name for a friendlier greeting
+    const firstName = name.split(' ')[0];
+
+    // Send Auto-reply to the Sender
+    const mailToSender = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: `Thank you for reaching out, ${firstName}!`,
+      text: `Hi ${firstName},\n\nThank you for sending a connecting request!\n\nI have received your message regarding "${subject}" and will respond to you soon.\n\nBest Regards,\nAditya Dive`
+    };
+
+    // Send Notification to Aditya (You)
+    const mailToAditya = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER, // Sending to yourself
+      subject: `New Contact Request: ${subject}`,
+      text: `You have a new contact request from your portfolio.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`
+    };
+
+    try {
+      // Send both emails asynchronously without waiting for them to finish before responding to the user
+      transporter.sendMail(mailToSender).catch(console.error);
+      transporter.sendMail(mailToAditya).catch(console.error);
+    } catch (mailErr) {
+      console.error('Error sending emails:', mailErr);
+    }
 
     res.status(201).json({ 
       success: true, 

@@ -14,6 +14,15 @@ function App() {
   const [currentHash, setCurrentHash] = useState(window.location.hash);
 
   useEffect(() => {
+    // Force scroll to top on page reload
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+
     const handleHashChange = () => {
       setCurrentHash(window.location.hash);
     };

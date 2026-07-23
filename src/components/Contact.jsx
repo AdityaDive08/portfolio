@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, MapPin, Send, CheckCircle, Phone } from 'lucide-react';
 import { userData } from '../data';
 
 const Contact = () => {
@@ -75,6 +75,15 @@ const Contact = () => {
             </div>
             <span>{userData.email}</span>
           </div>
+          
+          {userData.phone && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
+              <div style={{ color: 'var(--primary-glow)', background: 'rgba(37, 99, 235, 0.1)', padding: '12px', borderRadius: '50%' }}>
+                <Phone size={24} />
+              </div>
+              <span>{userData.phone}</span>
+            </div>
+          )}
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
             <div style={{ color: 'var(--primary-glow)', background: 'rgba(37, 99, 235, 0.1)', padding: '12px', borderRadius: '50%' }}>
