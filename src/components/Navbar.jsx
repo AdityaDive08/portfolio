@@ -211,7 +211,9 @@ const Navbar = () => {
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Want my Resume?</h3>
                 <form onSubmit={handleResumeDownload} style={{ display: 'flex', flexDirection: 'column', gap: '15px', textAlign: 'left' }}>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Company Name *</label>
+                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                      Company Name <span style={{ color: 'var(--primary-glow)' }}>*</span>
+                    </label>
                     <input 
                       type="text" 
                       value={resumeForm.companyName}
@@ -225,7 +227,7 @@ const Navbar = () => {
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Email (Optional)</label>
+                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Email</label>
                     <input 
                       type="email" 
                       value={resumeForm.email}

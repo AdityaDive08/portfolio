@@ -24,10 +24,11 @@ const initializeDatabase = async () => {
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL,
         subject VARCHAR(255) NOT NULL,
-        message TEXT NOT NULL,
+        message TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
+    await connection.query(`ALTER TABLE contacts MODIFY COLUMN message TEXT NULL`);
     await connection.query(`ALTER TABLE contacts MODIFY COLUMN id INT AUTO_INCREMENT`);
     logger.info('Contacts table is ready!');
 

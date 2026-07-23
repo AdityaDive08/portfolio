@@ -16,8 +16,8 @@ const submitContact = async (req, res) => {
     const { name, email, subject, message } = req.body;
     
     // Basic validation
-    if (!name || !email || !subject || !message) {
-      return res.status(400).json({ error: 'All fields are required' });
+    if (!name || !email || !subject) {
+      return res.status(400).json({ error: 'Name, email, and subject are required' });
     }
 
     // Save to Database
