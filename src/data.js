@@ -160,6 +160,7 @@ export const userData = {
         "/pharmacy/img 4.png",
         "/pharmacy/img 5.png"
       ],
+      imageFit: "contain",
       tags: ["HTML /CSS", "PHP", "MySQL"],
       github: "https://github.com/AdityaDive08/Pharmacy-Management-System",
       demo: "#"
