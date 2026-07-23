@@ -94,7 +94,7 @@ const Contact = () => {
             type="submit" 
             className="btn btn-outline" 
             disabled={status !== 'idle'}
-            style={{ alignSelf: 'flex-start', background: status === 'sent' ? '#10b981' : '' }}
+            style={{ alignSelf: 'center', background: status === 'sent' ? '#10b981' : '' }}
           >
             {status === 'idle' && <><Send size={18} /> Send Message</>}
             {status === 'sending' && 'Sending...'}

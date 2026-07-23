@@ -12,7 +12,7 @@ const Certifications = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <h2>My <span className="gradient-text">Certifications</span></h2>
+        <h2>My <span className="gradient-text">Certifications & Publications</span></h2>
       </motion.div>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>

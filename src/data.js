@@ -130,7 +130,14 @@ export const userData = {
     {
       title: "Stroke Risk Prediction",
       description: "This web application predicts a patient's stroke risk based on health factors like age and BMI. It pairs an interactive React frontend for user input with a Python backend that uses a machine learning model to deliver instant predictions.",
-      image: "/strokrprediction.png",
+      images: [
+        "/stroke/img 1.png",
+        "/stroke/img 2.png",
+        "/stroke/img 3.png",
+        "/stroke/img 4.png",
+        "/stroke/img 5.png",
+        "/stroke/img 6.png"
+      ],
       tags: ["Python", "ReactJS"],
       github: "https://github.com/AdityaDive08/Stroke-Prediction.git",
       demo: "#"

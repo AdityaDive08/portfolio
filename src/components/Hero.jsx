@@ -26,25 +26,25 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
         >
-          <motion.h3 variants={itemVariants} style={{ color: 'var(--secondary-glow)', fontSize: '1.2rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '10px' }}>
+          <motion.h3 variants={itemVariants} className="hero-greeting">
             Hello, I'm
           </motion.h3>
-          <motion.h1 variants={itemVariants} style={{ fontSize: '4.5rem', marginBottom: '15px' }}>
+          <motion.h1 variants={itemVariants} className="hero-title">
             {userData.name}
           </motion.h1>
-          <motion.h2 variants={itemVariants} style={{ fontSize: '2rem', color: 'var(--text-muted)', marginBottom: '25px', fontWeight: 500 }}>
+          <motion.h2 variants={itemVariants} className="hero-subtitle">
             <span dangerouslySetInnerHTML={{ __html: userData.role.replace('Software Engineer', '<span class="gradient-text">Software Engineer</span>') }} />
           </motion.h2>
-          <motion.p variants={itemVariants} style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '500px', marginBottom: '35px' }}>
+          <motion.p variants={itemVariants} className="hero-bio">
             {userData.bio}
           </motion.p>
           
-          <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
+          <motion.div variants={itemVariants} className="hero-buttons">
             <a href="#projects" className="btn btn-outline">View My Work</a>
             <a href="#contact" className="btn btn-outline">Contact Me</a>
           </motion.div>
           
-          <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px' }}>
+          <motion.div variants={itemVariants} className="hero-socials">
             {[
               { Icon: FaGithub, link: userData.socials?.github || "#" },
               { Icon: FaLinkedin, link: userData.socials?.linkedin || "#" },
@@ -104,6 +104,13 @@ const Hero = () => {
       </div>
 
       <style>{`
+        .hero-greeting { color: var(--secondary-glow); font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+        .hero-title { font-size: 4.5rem; margin-bottom: 15px; }
+        .hero-subtitle { font-size: 2rem; color: var(--text-muted); margin-bottom: 25px; font-weight: 500; }
+        .hero-bio { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 35px; }
+        .hero-buttons { display: flex; gap: 20px; margin-bottom: 40px; }
+        .hero-socials { display: flex; gap: 20px; }
+
         .social-icon:hover { background: var(--gradient-accent) !important; color: #fff !important; transform: translateY(-5px); }
         .circle-border { animation: spin-360 2.5s linear infinite; }
         @keyframes spin-360 {
@@ -111,9 +118,28 @@ const Hero = () => {
         }
         .animated-circle img { transition: transform 0.5s ease; }
         .animated-circle:hover img { transform: scale(1.02); }
+        
         @media (max-width: 991px) {
           #home > div { text-align: center; justify-content: center; }
-          .social-icon { margin: 0 auto; }
+          .hero-bio { margin: 0 auto 35px auto; }
+          .hero-buttons { justify-content: center; }
+          .hero-socials { justify-content: center; flex-wrap: wrap; }
+          .social-icon { margin: 0; }
+        }
+        
+        @media (max-width: 768px) {
+          .hero-title { font-size: 3.5rem; }
+          .hero-subtitle { font-size: 1.5rem; }
+          .animated-circle { width: 280px !important; height: 280px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .hero-title { font-size: 2.5rem; }
+          .hero-subtitle { font-size: 1.2rem; }
+          .hero-bio { font-size: 1rem; }
+          .hero-buttons { flex-direction: row; justify-content: center; gap: 10px; }
+          .hero-buttons .btn { width: auto; max-width: none; text-align: center; padding: 10px 15px; font-size: 0.9rem; }
+          .animated-circle { width: 240px !important; height: 240px !important; }
         }
       `}</style>
     </section>
