@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { userData } from '../data';
+import { userData } from '../models/dataModel';
+import { submitResumeDownload } from '../services/resumeService';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -25,18 +26,7 @@ const Navbar = () => {
     setResumeLoading(true);
     setResumeError('');
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${API_URL}/api/resume-download`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(resumeForm),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit details');
-      }
+      await submitResumeDownload(resumeForm.companyName, resumeForm.email);
       
       // Trigger download
       const link = document.createElement('a');

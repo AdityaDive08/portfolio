@@ -8,7 +8,7 @@ import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import ScrollToTop from './components/ScrollToTop';
 import Admin from './components/Admin';
-import './index.css';
+import './styles/index.css';
 
 function App() {
   const [currentHash, setCurrentHash] = useState(window.location.hash);

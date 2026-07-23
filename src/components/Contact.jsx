@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Send, CheckCircle, Phone } from 'lucide-react';
-import { userData } from '../data';
+import { userData } from '../models/dataModel';
+import { submitContactForm } from '../services/contactService';
 
 const Contact = () => {
   const [status, setStatus] = useState('idle');
@@ -19,16 +20,9 @@ const Contact = () => {
     };
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${API_URL}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      await submitContactForm(data);
 
-      if (response.ok) {
+      if (true) {
         setStatus('sent');
         e.target.reset();
         setTimeout(() => setStatus('idle'), 3000);

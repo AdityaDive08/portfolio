@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { fetchResumeDownloads } from '../services/resumeService';
 
 const Admin = () => {
   const [downloads, setDownloads] = useState([]);
@@ -9,14 +10,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchDownloads = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        const response = await fetch(`${API_URL}/api/resume-downloads`);
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        
-        const data = await response.json();
+        const data = await fetchResumeDownloads();
         setDownloads(data);
       } catch (err) {
         setError(err.message);

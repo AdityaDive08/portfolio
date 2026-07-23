@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { userData } from '../data';
+import { userData } from '../models/dataModel';
 import * as Icons from 'lucide-react';
 
 const About = () => {

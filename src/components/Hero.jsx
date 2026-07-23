@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
-import { userData } from '../data';
+import { userData } from '../models/dataModel';
 
 const Hero = () => {
   const containerVariants = {

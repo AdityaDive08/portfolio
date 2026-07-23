@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Award, ExternalLink, Calendar } from 'lucide-react';
-import { userData } from '../data';
+import { userData } from '../models/dataModel';
 
 const Certifications = () => {
   return (

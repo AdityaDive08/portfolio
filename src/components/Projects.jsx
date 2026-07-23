@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
-import { userData } from '../data';
+import { userData } from '../models/dataModel';
 
 const ImageCarousel = ({ images, title, isHovered, imageFit = 'cover' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import * as Icons from 'lucide-react';
 import * as FaIcons from 'react-icons/fa';
-import { userData } from '../data';
+import { userData } from '../models/dataModel';
 
 const SkillCategory = ({ title, skills, delay }) => {
   const handleSkillClick = (skillName) => {
