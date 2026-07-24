@@ -8,6 +8,7 @@ import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import ScrollToTop from './components/ScrollToTop';
 import Admin from './components/Admin';
+import ScrollProgress from './components/ScrollProgress';
 import './styles/index.css';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <>
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
