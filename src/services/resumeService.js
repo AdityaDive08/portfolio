@@ -1,12 +1,12 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-export const submitResumeDownload = async (companyName) => {
+export const submitResumeDownload = async (companyName, email) => {
   const response = await fetch(`${API_URL}/api/resume/download`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ companyName }),
+    body: JSON.stringify({ companyName, email }),
   });
 
   if (!response.ok) {
