@@ -114,35 +114,19 @@ const submitContact = async (req, res) => {
           console.log(`✅ Notification Email Sent to Aditya via Resend API! ID: ${adminData?.id}`);
         }
 
-        // B. Send Auto-Reply to Viewer (via Gmail Nodemailer if EMAIL_PASS present, else Resend)
-        if (process.env.EMAIL_PASS) {
-          try {
-            const transporter = getTransporter();
-            await transporter.sendMail({
-              from: `"Aditya Dive" <${recipientEmail}>`,
-              to: email,
-              subject: mailToViewer.subject,
-              html: mailToViewer.html,
-              text: mailToViewer.text
-            });
-            console.log(`✅ Auto-Reply Sent to Viewer (${email}) from ${recipientEmail} via Gmail!`);
-          } catch (gmailErr) {
-            console.error(`❌ Gmail Auto-Reply to Viewer Note/Error: ${gmailErr.message}`);
-          }
-        } else {
-          const { data: viewerData, error: viewerError } = await resend.emails.send({
-            from: 'Aditya Dive <onboarding@resend.dev>',
-            to: [email],
-            subject: mailToViewer.subject,
-            html: mailToViewer.html,
-            text: mailToViewer.text
-          });
+        // B. Send Auto-Reply to Viewer via Resend API (HTTPS - No Railway Port Timeouts)
+        const { data: viewerData, error: viewerError } = await resend.emails.send({
+          from: 'Aditya Dive <onboarding@resend.dev>',
+          to: [email],
+          subject: mailToViewer.subject,
+          html: mailToViewer.html,
+          text: mailToViewer.text
+        });
 
-          if (viewerError) {
-            console.error(`❌ Resend Viewer Auto-Reply Note/Error: ${viewerError.message || JSON.stringify(viewerError)}`);
-          } else {
-            console.log(`✅ Auto-Reply Email Sent to Viewer (${email})! ID: ${viewerData?.id}`);
-          }
+        if (viewerError) {
+          console.error(`❌ Resend Viewer Auto-Reply Note: ${viewerError.message || JSON.stringify(viewerError)}`);
+        } else {
+          console.log(`✅ Auto-Reply Email Sent to Viewer (${email})! ID: ${viewerData?.id}`);
         }
       } catch (resendErr) {
         console.error(`❌ Resend Exception: ${resendErr.message}`);
