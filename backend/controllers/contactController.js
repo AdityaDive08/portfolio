@@ -2,13 +2,17 @@ const Contact = require('../models/Contact');
 const nodemailer = require('nodemailer');
 
 // Nodemailer Transporter Setup
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+const getTransporter = () => {
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: { user, pass },
+    connectionTimeout: 10000
+  });
+};
 
 const submitContact = async (req, res) => {
   try {
@@ -24,10 +28,11 @@ const submitContact = async (req, res) => {
 
     // Extract first name for a friendlier greeting
     const firstName = name.split(' ')[0];
+    const emailUser = process.env.EMAIL_USER;
 
     // Send Auto-reply to the Sender
     const mailToSender = {
-      from: process.env.EMAIL_USER,
+      from: `"${emailUser}" <${emailUser}>`,
       to: email,
       subject: `Thank you for reaching out, ${firstName}!`,
       text: `Hi ${firstName},\n\nThank you for sending a connecting request!\n\nI have received your message regarding "${subject}" and will respond to you soon.\n\nBest Regards,\nAditya Dive`
@@ -35,16 +40,28 @@ const submitContact = async (req, res) => {
 
     // Send Notification to Aditya (You)
     const mailToAditya = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+      from: `"${emailUser}" <${emailUser}>`,
+      to: emailUser,
       subject: `New Contact Request: ${subject}`,
       text: `You have a new contact request from your portfolio.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`
     };
 
     try {
-      // Send both emails asynchronously
-      transporter.sendMail(mailToSender).catch(err => console.error(`Error sending auto-reply: ${err.message}`));
-      transporter.sendMail(mailToAditya).catch(err => console.error(`Error sending notification: ${err.message}`));
+      const transporter = getTransporter();
+      // Send both emails asynchronously in parallel with logging
+      const results = await Promise.allSettled([
+        transporter.sendMail(mailToSender),
+        transporter.sendMail(mailToAditya)
+      ]);
+
+      results.forEach((res, idx) => {
+        const mailType = idx === 0 ? 'auto-reply' : 'notification';
+        if (res.status === 'fulfilled') {
+          console.log(`✅ Sent ${mailType} successfully: ${res.value.messageId}`);
+        } else {
+          console.error(`❌ Failed sending ${mailType}:`, res.reason);
+        }
+      });
     } catch (mailErr) {
       console.error(`Error initiating email sending: ${mailErr.message}`);
     }
