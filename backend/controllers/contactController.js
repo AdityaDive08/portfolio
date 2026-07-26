@@ -1,17 +1,10 @@
 const Contact = require('../models/Contact');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-// Nodemailer Transporter Setup
-const getTransporter = () => {
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
-  return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: { user, pass },
-    connectionTimeout: 10000
-  });
+// Initialize Resend with API Key from environment variables
+const getResendClient = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  return new Resend(apiKey);
 };
 
 const submitContact = async (req, res) => {
@@ -28,42 +21,63 @@ const submitContact = async (req, res) => {
 
     // Extract first name for a friendlier greeting
     const firstName = name.split(' ')[0];
-    const emailUser = process.env.EMAIL_USER;
+    const resend = getResendClient();
 
-    // Send Auto-reply to the Sender
-    const mailToSender = {
-      from: `"${emailUser}" <${emailUser}>`,
-      to: email,
-      subject: `Thank you for reaching out, ${firstName}!`,
-      text: `Hi ${firstName},\n\nThank you for sending a connecting request!\n\nI have received your message regarding "${subject}" and will respond to you soon.\n\nBest Regards,\nAditya Dive`
+    // 1. Notification Email to Aditya (You) - contains replyTo set to sender's email
+    const notificationEmail = {
+      from: 'Portfolio Contact <onboarding@resend.dev>',
+      to: ['adityaarundive@gmail.com'],
+      replyTo: email,
+      subject: `New Contact Request: ${subject}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+          <h2 style="color: #4F46E5;">New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          <p><strong>Subject:</strong> ${subject}</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+          <p><strong>Message:</strong></p>
+          <blockquote style="background: #f9f9f9; padding: 15px; border-left: 4px solid #4F46E5; margin: 0;">
+            ${message || 'No message content provided.'}
+          </blockquote>
+        </div>
+      `
     };
 
-    // Send Notification to Aditya (You)
-    const mailToAditya = {
-      from: `"${emailUser}" <${emailUser}>`,
-      to: emailUser,
-      subject: `New Contact Request: ${subject}`,
-      text: `You have a new contact request from your portfolio.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`
+    // 2. Auto-reply Email to the Sender
+    const autoReplyEmail = {
+      from: 'Aditya Dive <onboarding@resend.dev>',
+      to: [email],
+      subject: `Thank you for reaching out, ${firstName}!`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+          <h2>Hi ${firstName},</h2>
+          <p>Thank you for sending a connecting request!</p>
+          <p>I have received your message regarding <strong>"${subject}"</strong> and will respond to you as soon as possible.</p>
+          <br/>
+          <p>Best Regards,<br/><strong>Aditya Dive</strong></p>
+        </div>
+      `
     };
 
     try {
-      const transporter = getTransporter();
-      // Send both emails asynchronously in parallel with logging
+      // Send both emails using Resend asynchronously
       const results = await Promise.allSettled([
-        transporter.sendMail(mailToSender),
-        transporter.sendMail(mailToAditya)
+        resend.emails.send(notificationEmail),
+        resend.emails.send(autoReplyEmail)
       ]);
 
-      results.forEach((res, idx) => {
-        const mailType = idx === 0 ? 'auto-reply' : 'notification';
-        if (res.status === 'fulfilled') {
-          console.log(`✅ Sent ${mailType} successfully: ${res.value.messageId}`);
+      results.forEach((resItem, idx) => {
+        const mailType = idx === 0 ? 'Notification to Aditya' : 'Auto-reply to Sender';
+        if (resItem.status === 'fulfilled' && !resItem.value.error) {
+          console.log(`✅ Resend: Sent ${mailType} successfully (ID: ${resItem.value.data?.id})`);
         } else {
-          console.error(`❌ Failed sending ${mailType}:`, res.reason);
+          const err = resItem.reason || resItem.value?.error;
+          console.error(`⚠️ Resend: ${mailType} note/error:`, err);
         }
       });
     } catch (mailErr) {
-      console.error(`Error initiating email sending: ${mailErr.message}`);
+      console.error(`Error sending emails via Resend: ${mailErr.message}`);
     }
 
     res.status(201).json({ 
