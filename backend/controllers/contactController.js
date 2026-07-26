@@ -1,10 +1,22 @@
 const Contact = require('../models/Contact');
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
-// Initialize Resend with API Key from environment variables
-const getResendClient = () => {
-  const apiKey = process.env.RESEND_API_KEY;
-  return new Resend(apiKey);
+// Create Nodemailer Transporter with explicit IPv4 and SSL settings for Railway compatibility
+const getTransporter = () => {
+  const user = process.env.EMAIL_USER;
+  // Automatically strip spaces from App Password (e.g. "snyu jgta psuw cojw" -> "snyujgtapsuwcojw")
+  const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
+
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // SSL port 465
+    auth: { user, pass },
+    family: 4, // CRITICAL FOR RAILWAY: Force IPv4 connection to prevent IPv6 DNS timeouts on cloud servers
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 15000
+  });
 };
 
 const submitContact = async (req, res) => {
@@ -16,76 +28,70 @@ const submitContact = async (req, res) => {
       return res.status(400).json({ error: 'Name, email, and subject are required' });
     }
 
-    // Save to Database
+    // 1. Save to Database
     const result = await Contact.create(name, email, subject, message);
 
-    // Extract first name for a friendlier greeting
+    // Extract first name for a friendly greeting
     const firstName = name.split(' ')[0];
-    const resend = getResendClient();
+    const emailUser = process.env.EMAIL_USER;
 
-    // 1. Notification Email to Aditya (You) - contains replyTo set to sender's email
-    const notificationEmail = {
-      from: 'Portfolio Contact <onboarding@resend.dev>',
-      to: ['adityaarundive@gmail.com'],
-      replyTo: email,
+    // 2. Prepare Notification Email (Sent to Aditya)
+    const mailToAditya = {
+      from: `"${name}" <${emailUser}>`,
+      to: emailUser,
+      replyTo: email, // Directly reply to visitor from Gmail
       subject: `New Contact Request: ${subject}`,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-          <h2 style="color: #4F46E5;">New Contact Form Submission</h2>
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; line-height: 1.6;">
+          <h2 style="color: #2563eb;">New Portfolio Contact Request</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
           <p><strong>Subject:</strong> ${subject}</p>
-          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;" />
           <p><strong>Message:</strong></p>
-          <blockquote style="background: #f9f9f9; padding: 15px; border-left: 4px solid #4F46E5; margin: 0;">
-            ${message || 'No message content provided.'}
-          </blockquote>
+          <blockquote style="background: #f3f4f6; padding: 15px; border-left: 4px solid #2563eb; margin: 0; white-space: pre-wrap;">${message || 'No message content provided.'}</blockquote>
         </div>
       `
     };
 
-    // 2. Auto-reply Email to the Sender
-    const autoReplyEmail = {
-      from: 'Aditya Dive <onboarding@resend.dev>',
-      to: [email],
+    // 3. Prepare Auto-Reply Email (Sent to Visitor)
+    const mailToSender = {
+      from: `"Aditya Dive" <${emailUser}>`,
+      to: email,
       subject: `Thank you for reaching out, ${firstName}!`,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; line-height: 1.6;">
           <h2>Hi ${firstName},</h2>
           <p>Thank you for sending a connecting request!</p>
-          <p>I have received your message regarding <strong>"${subject}"</strong> and will respond to you as soon as possible.</p>
+          <p>I have received your message regarding <strong>"${subject}"</strong> and will respond to you soon.</p>
           <br/>
           <p>Best Regards,<br/><strong>Aditya Dive</strong></p>
         </div>
       `
     };
 
+    // 4. Send Emails via Nodemailer
     try {
-      const transporter = getResendClient();
+      const transporter = getTransporter();
       
-      // 1. Send Notification to Aditya (Always succeeds, includes replyTo)
-      const notifyResult = await transporter.emails.send(notificationEmail);
-      if (notifyResult.error) {
-        console.error('❌ Resend Notification Error:', notifyResult.error);
-      } else {
-        console.log(`✅ Resend: Notification sent to Aditya (ID: ${notifyResult.data?.id})`);
-      }
+      const results = await Promise.allSettled([
+        transporter.sendMail(mailToAditya),
+        transporter.sendMail(mailToSender)
+      ]);
 
-      // 2. Try Auto-reply to Sender (Resend free tier only allows sending to your own email unless a domain is added)
-      const autoReplyResult = await transporter.emails.send(autoReplyEmail);
-      if (autoReplyResult.error) {
-        if (autoReplyResult.error.statusCode === 403) {
-          console.log(`ℹ️ Auto-reply skipped: Resend test mode allows sending emails only to your account email (adityaarundive@gmail.com). To enable auto-reply to visitors, add a domain at resend.com/domains.`);
+      results.forEach((resItem, idx) => {
+        const mailType = idx === 0 ? 'Notification to Aditya' : `Auto-reply to ${email}`;
+        if (resItem.status === 'fulfilled') {
+          console.log(`✅ Nodemailer: Sent ${mailType} successfully! (Response: ${resItem.value.response})`);
         } else {
-          console.error('⚠️ Resend Auto-reply Error:', autoReplyResult.error);
+          console.error(`❌ Nodemailer: Failed sending ${mailType}:`, resItem.reason?.message || resItem.reason);
         }
-      } else {
-        console.log(`✅ Resend: Auto-reply sent to ${email} (ID: ${autoReplyResult.data?.id})`);
-      }
+      });
     } catch (mailErr) {
-      console.error(`Error sending emails via Resend: ${mailErr.message}`);
+      console.error(`Error executing Nodemailer sendMail: ${mailErr.message}`);
     }
 
+    // Return HTTP 201 response to client
     res.status(201).json({ 
       success: true, 
       message: 'Message sent successfully!',
