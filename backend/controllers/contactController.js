@@ -76,20 +76,20 @@ const submitContact = async (req, res) => {
 
     // 3. Prepare Confirmation Auto-Reply Email to Viewer
     const mailToViewer = {
-      from: 'Aditya Dive <onboarding@resend.dev>',
+      from: `Aditya Dive <${recipientEmail}>`,
       to: [email],
-      subject: `Thank you for contacting me, ${name}!`,
+      subject: `Thank you for reaching out, ${name}!`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; color: #1f2937;">
           <h2 style="color: #2563eb; margin-top: 0;">Thank You for Reaching Out!</h2>
           <p>Hi <strong>${name}</strong>,</p>
-          <p>I have received your message regarding <strong>"${subject}"</strong>. Thank you for connecting with me!</p>
-          <p>I will review your message and respond as soon as possible.</p>
+          <p>Thank you for getting in touch regarding <strong>"${subject}"</strong>.</p>
+          <p style="font-size: 1.05rem; color: #111827;">I have received your message. <strong>Aditya will contact you soon!</strong></p>
           <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
           <p style="color: #4b5563; margin-bottom: 0;">Best regards,<br/><strong>Aditya Dive</strong><br/><a href="mailto:${recipientEmail}" style="color: #2563eb;">${recipientEmail}</a></p>
         </div>
       `,
-      text: `Hi ${name},\n\nThank you for reaching out regarding "${subject}". I have received your message and will get back to you as soon as possible.\n\nBest regards,\nAditya Dive`
+      text: `Hi ${name},\n\nThank you for reaching out regarding "${subject}". I have received your message. Aditya will contact you soon!\n\nBest regards,\nAditya Dive\n${recipientEmail}`
     };
 
     // 4. Send Notification Email & Viewer Auto-Reply using Resend API (Primary) or Nodemailer SMTP (Fallback)
@@ -114,19 +114,35 @@ const submitContact = async (req, res) => {
           console.log(`✅ Notification Email Sent to Aditya via Resend API! ID: ${adminData?.id}`);
         }
 
-        // B. Send Auto-Reply to Viewer
-        const { data: viewerData, error: viewerError } = await resend.emails.send({
-          from: 'Aditya Dive <onboarding@resend.dev>',
-          to: [email],
-          subject: mailToViewer.subject,
-          html: mailToViewer.html,
-          text: mailToViewer.text
-        });
-
-        if (viewerError) {
-          console.error(`❌ Resend Viewer Auto-Reply Note/Error: ${viewerError.message || JSON.stringify(viewerError)}`);
+        // B. Send Auto-Reply to Viewer (via Gmail Nodemailer if EMAIL_PASS present, else Resend)
+        if (process.env.EMAIL_PASS) {
+          try {
+            const transporter = getTransporter();
+            await transporter.sendMail({
+              from: `"Aditya Dive" <${recipientEmail}>`,
+              to: email,
+              subject: mailToViewer.subject,
+              html: mailToViewer.html,
+              text: mailToViewer.text
+            });
+            console.log(`✅ Auto-Reply Sent to Viewer (${email}) from ${recipientEmail} via Gmail!`);
+          } catch (gmailErr) {
+            console.error(`❌ Gmail Auto-Reply to Viewer Note/Error: ${gmailErr.message}`);
+          }
         } else {
-          console.log(`✅ Auto-Reply Email Sent to Viewer (${email})! ID: ${viewerData?.id}`);
+          const { data: viewerData, error: viewerError } = await resend.emails.send({
+            from: 'Aditya Dive <onboarding@resend.dev>',
+            to: [email],
+            subject: mailToViewer.subject,
+            html: mailToViewer.html,
+            text: mailToViewer.text
+          });
+
+          if (viewerError) {
+            console.error(`❌ Resend Viewer Auto-Reply Note/Error: ${viewerError.message || JSON.stringify(viewerError)}`);
+          } else {
+            console.log(`✅ Auto-Reply Email Sent to Viewer (${email})! ID: ${viewerData?.id}`);
+          }
         }
       } catch (resendErr) {
         console.error(`❌ Resend Exception: ${resendErr.message}`);
