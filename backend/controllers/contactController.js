@@ -1,18 +1,18 @@
 const Contact = require('../models/Contact');
 const nodemailer = require('nodemailer');
 
-// Create Nodemailer Transporter with explicit IPv4 and SSL settings for Railway compatibility
+// Create Nodemailer Transporter with explicit IPv4 and SSL settings for Railway deployment
 const getTransporter = () => {
-  const user = process.env.EMAIL_USER;
-  // Automatically strip spaces from App Password (e.g. "snyu jgta psuw cojw" -> "snyujgtapsuwcojw")
+  const user = process.env.EMAIL_USER || 'adityaarundive@gmail.com';
+  // Strip spaces from App Password (e.g. "snyu jgta psuw cojw" -> "snyujgtapsuwcojw")
   const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
 
   return nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
-    secure: true, // SSL port 465
+    secure: true, // SSL
     auth: { user, pass },
-    family: 4, // CRITICAL FOR RAILWAY: Force IPv4 connection to prevent IPv6 DNS timeouts on cloud servers
+    family: 4, // Force IPv4 to prevent IPv6 DNS timeouts on cloud servers
     connectionTimeout: 15000,
     greetingTimeout: 15000,
     socketTimeout: 15000
@@ -28,67 +28,53 @@ const submitContact = async (req, res) => {
       return res.status(400).json({ error: 'Name, email, and subject are required' });
     }
 
-    // 1. Save to Database
+    // 1. Save contact request to Database
     const result = await Contact.create(name, email, subject, message);
 
-    // Extract first name for a friendly greeting
-    const firstName = name.split(' ')[0];
-    const emailUser = process.env.EMAIL_USER;
+    const recipientEmail = process.env.EMAIL_USER || 'adityaarundive@gmail.com';
 
-    // 2. Prepare Notification Email (Sent to Aditya)
+    // 2. Prepare Single Incoming Request Notification Email to Aditya
     const mailToAditya = {
-      from: `"${name}" <${emailUser}>`,
-      to: emailUser,
-      replyTo: email, // Directly reply to visitor from Gmail
+      from: `"Portfolio Contact Form" <${recipientEmail}>`,
+      to: recipientEmail,
+      replyTo: email, // Click Reply in Gmail to respond directly to the sender
       subject: `New Contact Request: ${subject}`,
+      text: `You have received a new contact request from your portfolio.\n\n` +
+            `Name: ${name}\n` +
+            `Email: ${email}\n` +
+            `Subject: ${subject}\n\n` +
+            `Message:\n${message || 'No message provided.'}\n`,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; line-height: 1.6;">
-          <h2 style="color: #2563eb;">New Portfolio Contact Request</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          <p><strong>Subject:</strong> ${subject}</p>
-          <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;" />
-          <p><strong>Message:</strong></p>
-          <blockquote style="background: #f3f4f6; padding: 15px; border-left: 4px solid #2563eb; margin: 0; white-space: pre-wrap;">${message || 'No message content provided.'}</blockquote>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; color: #1f2937;">
+          <h2 style="color: #2563eb; margin-top: 0;">New Incoming Contact Request</h2>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; width: 100px; color: #4b5563;">Name:</td>
+              <td style="padding: 8px 0; color: #111827;">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; color: #4b5563;">Email:</td>
+              <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #2563eb;">${email}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; font-weight: bold; color: #4b5563;">Subject:</td>
+              <td style="padding: 8px 0; color: #111827;">${subject}</td>
+            </tr>
+          </table>
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
+          <p style="font-weight: bold; color: #4b5563; margin-bottom: 8px;">Message:</p>
+          <div style="background: #f9fafb; padding: 16px; border-left: 4px solid #2563eb; border-radius: 4px; white-space: pre-wrap; color: #374151;">${message || 'No message content provided.'}</div>
         </div>
       `
     };
 
-    // 3. Prepare Auto-Reply Email (Sent to Visitor)
-    const mailToSender = {
-      from: `"Aditya Dive" <${emailUser}>`,
-      to: email,
-      subject: `Thank you for reaching out, ${firstName}!`,
-      html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; line-height: 1.6;">
-          <h2>Hi ${firstName},</h2>
-          <p>Thank you for sending a connecting request!</p>
-          <p>I have received your message regarding <strong>"${subject}"</strong> and will respond to you soon.</p>
-          <br/>
-          <p>Best Regards,<br/><strong>Aditya Dive</strong></p>
-        </div>
-      `
-    };
-
-    // 4. Send Emails via Nodemailer
+    // 3. Send Notification Email
     try {
       const transporter = getTransporter();
-      
-      const results = await Promise.allSettled([
-        transporter.sendMail(mailToAditya),
-        transporter.sendMail(mailToSender)
-      ]);
-
-      results.forEach((resItem, idx) => {
-        const mailType = idx === 0 ? 'Notification to Aditya' : `Auto-reply to ${email}`;
-        if (resItem.status === 'fulfilled') {
-          console.log(`✅ Nodemailer: Sent ${mailType} successfully! (Response: ${resItem.value.response})`);
-        } else {
-          console.error(`❌ Nodemailer: Failed sending ${mailType}:`, resItem.reason?.message || resItem.reason);
-        }
-      });
+      const info = await transporter.sendMail(mailToAditya);
+      console.log(`✅ Notification Email Sent to Aditya! ID: ${info.messageId} | Response: ${info.response}`);
     } catch (mailErr) {
-      console.error(`Error executing Nodemailer sendMail: ${mailErr.message}`);
+      console.error(`❌ Error sending notification email via Nodemailer: ${mailErr.message}`, mailErr);
     }
 
     // Return HTTP 201 response to client
