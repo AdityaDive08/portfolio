@@ -1,7 +1,13 @@
 const Contact = require('../models/Contact');
 const nodemailer = require('nodemailer');
+const dns = require('dns');
 
-// Create Nodemailer Transporter with explicit IPv4 and SSL settings for Railway deployment
+// Custom DNS lookup that strictly forces IPv4 (family: 4) to fix Railway's ENETUNREACH IPv6 issue
+const forceIPv4Lookup = (hostname, options, callback) => {
+  return dns.lookup(hostname, { family: 4 }, callback);
+};
+
+// Create Nodemailer Transporter strictly forced to IPv4
 const getTransporter = () => {
   const user = process.env.EMAIL_USER || 'adityaarundive@gmail.com';
   // Strip spaces from App Password (e.g. "snyu jgta psuw cojw" -> "snyujgtapsuwcojw")
@@ -12,7 +18,7 @@ const getTransporter = () => {
     port: 465,
     secure: true, // SSL
     auth: { user, pass },
-    family: 4, // Force IPv4 to prevent IPv6 DNS timeouts on cloud servers
+    lookup: forceIPv4Lookup, // CRITICAL FIX: Forces DNS resolution to return IPv4 only (bypasses Railway IPv6 ENETUNREACH)
     connectionTimeout: 15000,
     greetingTimeout: 15000,
     socketTimeout: 15000
@@ -68,13 +74,30 @@ const submitContact = async (req, res) => {
       `
     };
 
-    // 3. Send Notification Email
+    // 3. Send Notification Email with fallback
     try {
       const transporter = getTransporter();
       const info = await transporter.sendMail(mailToAditya);
       console.log(`✅ Notification Email Sent to Aditya! ID: ${info.messageId} | Response: ${info.response}`);
     } catch (mailErr) {
-      console.error(`❌ Error sending notification email via Nodemailer: ${mailErr.message}`, mailErr);
+      console.error(`❌ Port 465 Failed: ${mailErr.message}. Retrying on Port 587...`);
+      try {
+        // Fallback Transporter on Port 587
+        const user = process.env.EMAIL_USER || 'adityaarundive@gmail.com';
+        const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
+        const fallbackTransporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false, // STARTTLS
+          auth: { user, pass },
+          lookup: forceIPv4Lookup,
+          connectionTimeout: 15000
+        });
+        const fallbackInfo = await fallbackTransporter.sendMail(mailToAditya);
+        console.log(`✅ Notification Email Sent to Aditya via Port 587 Fallback! ID: ${fallbackInfo.messageId}`);
+      } catch (fallbackErr) {
+        console.error(`❌ Fallback Port 587 also failed: ${fallbackErr.message}`);
+      }
     }
 
     // Return HTTP 201 response to client
