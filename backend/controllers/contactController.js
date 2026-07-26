@@ -74,12 +74,32 @@ const submitContact = async (req, res) => {
       `
     };
 
-    // 3. Send Notification Email using Resend API (Primary) or Nodemailer SMTP (Fallback)
+    // 3. Prepare Confirmation Auto-Reply Email to Viewer
+    const mailToViewer = {
+      from: 'Aditya Dive <onboarding@resend.dev>',
+      to: [email],
+      subject: `Thank you for contacting me, ${name}!`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; color: #1f2937;">
+          <h2 style="color: #2563eb; margin-top: 0;">Thank You for Reaching Out!</h2>
+          <p>Hi <strong>${name}</strong>,</p>
+          <p>I have received your message regarding <strong>"${subject}"</strong>. Thank you for connecting with me!</p>
+          <p>I will review your message and respond as soon as possible.</p>
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
+          <p style="color: #4b5563; margin-bottom: 0;">Best regards,<br/><strong>Aditya Dive</strong><br/><a href="mailto:${recipientEmail}" style="color: #2563eb;">${recipientEmail}</a></p>
+        </div>
+      `,
+      text: `Hi ${name},\n\nThank you for reaching out regarding "${subject}". I have received your message and will get back to you as soon as possible.\n\nBest regards,\nAditya Dive`
+    };
+
+    // 4. Send Notification Email & Viewer Auto-Reply using Resend API (Primary) or Nodemailer SMTP (Fallback)
     if (process.env.RESEND_API_KEY) {
       try {
         const { Resend } = require('resend');
         const resend = new Resend(process.env.RESEND_API_KEY);
-        const { data, error } = await resend.emails.send({
+
+        // A. Send Notification to Aditya
+        const { data: adminData, error: adminError } = await resend.emails.send({
           from: 'Portfolio Contact <onboarding@resend.dev>',
           to: [recipientEmail],
           replyTo: email,
@@ -88,10 +108,25 @@ const submitContact = async (req, res) => {
           text: mailToAditya.text
         });
 
-        if (error) {
-          console.error(`❌ Resend API Error: ${error.message || JSON.stringify(error)}`);
+        if (adminError) {
+          console.error(`❌ Resend Admin Email Error: ${adminError.message || JSON.stringify(adminError)}`);
         } else {
-          console.log(`✅ Notification Email Sent via Resend API! ID: ${data?.id}`);
+          console.log(`✅ Notification Email Sent to Aditya via Resend API! ID: ${adminData?.id}`);
+        }
+
+        // B. Send Auto-Reply to Viewer
+        const { data: viewerData, error: viewerError } = await resend.emails.send({
+          from: 'Aditya Dive <onboarding@resend.dev>',
+          to: [email],
+          subject: mailToViewer.subject,
+          html: mailToViewer.html,
+          text: mailToViewer.text
+        });
+
+        if (viewerError) {
+          console.error(`❌ Resend Viewer Auto-Reply Note/Error: ${viewerError.message || JSON.stringify(viewerError)}`);
+        } else {
+          console.log(`✅ Auto-Reply Email Sent to Viewer (${email})! ID: ${viewerData?.id}`);
         }
       } catch (resendErr) {
         console.error(`❌ Resend Exception: ${resendErr.message}`);
@@ -101,6 +136,20 @@ const submitContact = async (req, res) => {
         const transporter = getTransporter();
         const info = await transporter.sendMail(mailToAditya);
         console.log(`✅ Notification Email Sent to Aditya! ID: ${info.messageId} | Response: ${info.response}`);
+        
+        // Try auto-reply via Nodemailer
+        try {
+          await transporter.sendMail({
+            from: `"Aditya Dive" <${recipientEmail}>`,
+            to: email,
+            subject: mailToViewer.subject,
+            html: mailToViewer.html,
+            text: mailToViewer.text
+          });
+          console.log(`✅ Auto-Reply Sent to Viewer via Nodemailer!`);
+        } catch (viewerMailErr) {
+          console.error(`❌ Viewer Auto-Reply via Nodemailer failed: ${viewerMailErr.message}`);
+        }
       } catch (mailErr) {
         console.error(`❌ Port 465 Failed: ${mailErr.message}. Retrying on Port 587...`);
         try {
