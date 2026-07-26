@@ -12,7 +12,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*', // Set FRONTEND_URL in Railway env vars to your Vercel URL
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Initialize Database Connection and Tables
@@ -20,7 +24,12 @@ initializeDatabase();
 
 // Mount Routes
 app.use('/api/contact', contactRoutes);
-app.use('/api/resume', resumeRoutes); // Note: I'm changing this to /api/resume to encompass both download and downloads endpoints
+app.use('/api/resume', resumeRoutes);
+
+// Health Check Route (used by Railway to verify service is alive)
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // Base Route
 app.get('/', (req, res) => {
