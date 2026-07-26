@@ -61,21 +61,27 @@ const submitContact = async (req, res) => {
     };
 
     try {
-      // Send both emails using Resend asynchronously
-      const results = await Promise.allSettled([
-        resend.emails.send(notificationEmail),
-        resend.emails.send(autoReplyEmail)
-      ]);
+      const transporter = getResendClient();
+      
+      // 1. Send Notification to Aditya (Always succeeds, includes replyTo)
+      const notifyResult = await transporter.emails.send(notificationEmail);
+      if (notifyResult.error) {
+        console.error('❌ Resend Notification Error:', notifyResult.error);
+      } else {
+        console.log(`✅ Resend: Notification sent to Aditya (ID: ${notifyResult.data?.id})`);
+      }
 
-      results.forEach((resItem, idx) => {
-        const mailType = idx === 0 ? 'Notification to Aditya' : 'Auto-reply to Sender';
-        if (resItem.status === 'fulfilled' && !resItem.value.error) {
-          console.log(`✅ Resend: Sent ${mailType} successfully (ID: ${resItem.value.data?.id})`);
+      // 2. Try Auto-reply to Sender (Resend free tier only allows sending to your own email unless a domain is added)
+      const autoReplyResult = await transporter.emails.send(autoReplyEmail);
+      if (autoReplyResult.error) {
+        if (autoReplyResult.error.statusCode === 403) {
+          console.log(`ℹ️ Auto-reply skipped: Resend test mode allows sending emails only to your account email (adityaarundive@gmail.com). To enable auto-reply to visitors, add a domain at resend.com/domains.`);
         } else {
-          const err = resItem.reason || resItem.value?.error;
-          console.error(`⚠️ Resend: ${mailType} note/error:`, err);
+          console.error('⚠️ Resend Auto-reply Error:', autoReplyResult.error);
         }
-      });
+      } else {
+        console.log(`✅ Resend: Auto-reply sent to ${email} (ID: ${autoReplyResult.data?.id})`);
+      }
     } catch (mailErr) {
       console.error(`Error sending emails via Resend: ${mailErr.message}`);
     }
