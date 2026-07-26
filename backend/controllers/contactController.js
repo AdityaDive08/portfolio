@@ -100,7 +100,7 @@ const submitContact = async (req, res) => {
 
         // A. Send Notification to Aditya
         const { data: adminData, error: adminError } = await resend.emails.send({
-          from: 'Portfolio Contact <onboarding@resend.dev>',
+          from: `${name} <onboarding@resend.dev>`,
           to: [recipientEmail],
           replyTo: email,
           subject: mailToAditya.subject,
