@@ -74,29 +74,51 @@ const submitContact = async (req, res) => {
       `
     };
 
-    // 3. Send Notification Email with fallback
-    try {
-      const transporter = getTransporter();
-      const info = await transporter.sendMail(mailToAditya);
-      console.log(`✅ Notification Email Sent to Aditya! ID: ${info.messageId} | Response: ${info.response}`);
-    } catch (mailErr) {
-      console.error(`❌ Port 465 Failed: ${mailErr.message}. Retrying on Port 587...`);
+    // 3. Send Notification Email using Resend API (Primary) or Nodemailer SMTP (Fallback)
+    if (process.env.RESEND_API_KEY) {
       try {
-        // Fallback Transporter on Port 587
-        const user = process.env.EMAIL_USER || 'adityaarundive@gmail.com';
-        const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
-        const fallbackTransporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 587,
-          secure: false, // STARTTLS
-          auth: { user, pass },
-          lookup: forceIPv4Lookup,
-          connectionTimeout: 15000
+        const { Resend } = require('resend');
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const { data, error } = await resend.emails.send({
+          from: 'Portfolio Contact <onboarding@resend.dev>',
+          to: [recipientEmail],
+          replyTo: email,
+          subject: mailToAditya.subject,
+          html: mailToAditya.html,
+          text: mailToAditya.text
         });
-        const fallbackInfo = await fallbackTransporter.sendMail(mailToAditya);
-        console.log(`✅ Notification Email Sent to Aditya via Port 587 Fallback! ID: ${fallbackInfo.messageId}`);
-      } catch (fallbackErr) {
-        console.error(`❌ Fallback Port 587 also failed: ${fallbackErr.message}`);
+
+        if (error) {
+          console.error(`❌ Resend API Error: ${error.message || JSON.stringify(error)}`);
+        } else {
+          console.log(`✅ Notification Email Sent via Resend API! ID: ${data?.id}`);
+        }
+      } catch (resendErr) {
+        console.error(`❌ Resend Exception: ${resendErr.message}`);
+      }
+    } else {
+      try {
+        const transporter = getTransporter();
+        const info = await transporter.sendMail(mailToAditya);
+        console.log(`✅ Notification Email Sent to Aditya! ID: ${info.messageId} | Response: ${info.response}`);
+      } catch (mailErr) {
+        console.error(`❌ Port 465 Failed: ${mailErr.message}. Retrying on Port 587...`);
+        try {
+          const user = process.env.EMAIL_USER || 'adityaarundive@gmail.com';
+          const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
+          const fallbackTransporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false, // STARTTLS
+            auth: { user, pass },
+            lookup: forceIPv4Lookup,
+            connectionTimeout: 15000
+          });
+          const fallbackInfo = await fallbackTransporter.sendMail(mailToAditya);
+          console.log(`✅ Notification Email Sent to Aditya via Port 587 Fallback! ID: ${fallbackInfo.messageId}`);
+        } catch (fallbackErr) {
+          console.error(`❌ Fallback Port 587 also failed: ${fallbackErr.message}`);
+        }
       }
     }
 

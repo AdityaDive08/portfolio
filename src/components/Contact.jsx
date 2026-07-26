@@ -33,7 +33,7 @@ const Contact = () => {
     } catch (error) {
       console.error('Error:', error);
       setStatus('idle');
-      alert('Failed to send message. Please check if the backend server is running.');
+      alert(`Error: ${error.message}`);
     }
   };
 

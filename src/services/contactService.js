@@ -10,7 +10,8 @@ export const submitContactForm = async (data) => {
   });
   
   if (!response.ok) {
-    throw new Error('Failed to send message');
+    const errData = await response.json().catch(() => ({}));
+    throw new Error(errData.error || `Server error: ${response.status}`);
   }
   
   return await response.json();
