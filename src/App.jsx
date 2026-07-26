@@ -7,7 +7,6 @@ import Projects from './components/Projects';
 import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import ScrollToTop from './components/ScrollToTop';
-import Admin from './components/Admin';
 import ScrollProgress from './components/ScrollProgress';
 import './styles/index.css';
 
@@ -31,10 +30,6 @@ function App() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  if (currentHash === '#admin') {
-    return <Admin />;
-  }
 
   return (
     <>

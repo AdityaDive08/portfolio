@@ -15,13 +15,3 @@ export const submitResumeDownload = async (companyName, email) => {
 
   return await response.json();
 };
-
-export const fetchResumeDownloads = async () => {
-  const response = await fetch(`${API_URL}/api/resume/downloads`);
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch downloads');
-  }
-
-  return await response.json();
-};

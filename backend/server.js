@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { initializeDatabase } = require('./config/db');
-const logger = require('./utils/logger');
 
 // Import Routes
 const contactRoutes = require('./routes/contactRoutes');
@@ -38,5 +37,5 @@ app.get('/', (req, res) => {
 
 // Start server
 app.listen(port, '0.0.0.0', () => {
-  logger.info(`Server is running on http://0.0.0.0:${port}`);
+  console.log(`Server is running on http://0.0.0.0:${port}`);
 });
