@@ -89,34 +89,30 @@ const ProjectCard = ({ project, index }) => {
         imageFit={project.imageFit}
       />
       <div style={{ padding: '25px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '10px', marginBottom: '15px' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {project.tags.map(tag => (
-              <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
-                {tag}
-              </span>
-            ))}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
+          {project.tags.map(tag => (
+            <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+          <h3 style={{ fontSize: '1.5rem', margin: 0, wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
+        </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '20px' }}>{project.description}</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '15px' }}>
+          <div style={{ display: 'flex', gap: '15px' }}>
+            {project.github && (
+              <a href={project.github} className="project-link" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem', fontWeight: 600, transition: 'var(--transition)' }}>
+                <FaGithub size={18} /> Code
+              </a>
+            )}
           </div>
           {project.duration && (
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--primary-glow)', background: 'rgba(37, 99, 235, 0.15)', padding: '4px 10px', borderRadius: '20px', border: '1px solid rgba(37, 99, 235, 0.3)' }}>
               <Calendar size={12} />
               {project.duration}
             </span>
-          )}
-        </div>
-        <h3 style={{ fontSize: '1.5rem', marginBottom: '10px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '20px' }}>{project.description}</p>
-        
-        <div style={{ display: 'flex', gap: '15px' }}>
-          {project.github && (
-            <a href={project.github} className="project-link" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem', fontWeight: 600, transition: 'var(--transition)' }}>
-              <FaGithub size={18} /> Code
-            </a>
-          )}
-          {project.demo && (
-            <a href={project.demo} className="project-link" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem', fontWeight: 600, transition: 'var(--transition)' }}>
-              {/* <ExternalLink size={18} /> Live Demo */}
-            </a>
           )}
         </div>
       </div>

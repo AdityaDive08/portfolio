@@ -94,6 +94,7 @@ export const userData = {
     },
     {
       title: "AI Voice Assistant (HealthFreak)",
+      duration: "Sept 2025 - Nov 2025",
       description: "HealthFreak is an AI-powered healthcare platform that combines a smart medical assistant with real-time health tracking. Users can consult an AI through voice or text, monitor vital health metrics, visualize their progress with interactive dashboards, and access emergency SOS and nearby hospital services.",
       images: [
         "/HealthFreak/img 1.png",
@@ -107,6 +108,7 @@ export const userData = {
     },
     {
       title: "AI-Powered-Mock-Interview",
+      duration: "Dec 2024 - Jun 2025",
       description: "The AI Powered Mock Interview system is an intelligent web-based application developed as a Mini Project during my Master's program. This platform simulates real interview scenarios using AI-driven logic to help users prepare effectively for technical and behavioral interviews",
       images: [
         "/mockinterview/img 1.png",
@@ -123,6 +125,7 @@ export const userData = {
     },
     {
       title: "HealthFreak-Application",
+      duration: "Jan 2026 - Jun 2026",
       description: "HealthFreak is an AI-powered healthcare application available on both web and Android. It enables users to consult an AI medical assistant, track vital health metrics, access emergency SOS services, and locate nearby hospitals through a secure, intuitive, and modern healthcare platform.",
       images: [
         "/healthfreak app/img 1.png",
@@ -139,6 +142,7 @@ export const userData = {
     },
     {
       title: "Stroke Risk Prediction",
+      duration: "Jan 2026 - Jun 2026",
       description: "This web application predicts a patient's stroke risk based on health factors like age and BMI. It pairs an interactive React frontend for user input with a Python backend that uses a machine learning model to deliver instant predictions.",
       images: [
         "/stroke/img 1.png",
@@ -154,6 +158,7 @@ export const userData = {
     },
     {
       title: "Pharmacy Management System",
+      duration: "Nov 2023 - Jan 2024",
       description: "Pharmacy Management System is a web-based application that streamlines pharmacy operations by managing medicine inventory, sales, billing, and customer records. It provides an intuitive interface for tracking stock, monitoring expiry dates, and generating invoices, helping improve efficiency and reduce manual work.",
       images: [
         "/pharmacy/img 1.png",
