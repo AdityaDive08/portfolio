@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, X, ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { userData } from '../models/dataModel';
 
@@ -89,12 +89,20 @@ const ProjectCard = ({ project, index }) => {
         imageFit={project.imageFit}
       />
       <div style={{ padding: '25px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
-          {project.tags.map(tag => (
-            <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
-              {tag}
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '10px', marginBottom: '15px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            {project.tags.map(tag => (
+              <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
+                {tag}
+              </span>
+            ))}
+          </div>
+          {project.duration && (
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--primary-glow)', background: 'rgba(37, 99, 235, 0.15)', padding: '4px 10px', borderRadius: '20px', border: '1px solid rgba(37, 99, 235, 0.3)' }}>
+              <Calendar size={12} />
+              {project.duration}
             </span>
-          ))}
+          )}
         </div>
         <h3 style={{ fontSize: '1.5rem', marginBottom: '10px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '20px' }}>{project.description}</p>

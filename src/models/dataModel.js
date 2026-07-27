@@ -81,6 +81,7 @@ export const userData = {
   projects: [
     {
       title: "SteelMart",
+      duration: "Jan 2026 - Jun 2026",
       description: "SteelMart CRM is a MERN stack Customer Relationship Management (CRM) application developed during my internship to streamline customer, vendor, and sales operations in the steel industry. The system enables efficient management of leads, customers, quotations, orders, and invoices through a centralized dashboard. It features secure authentication, role-based access control, and RESTful APIs for seamless business workflow management.",
       images: [
         "/steelmart/img 1.png", "/steelmart/img 2.png", "/steelmart/img 3.png", 
