@@ -78,7 +78,7 @@ const ProjectCard = ({ project, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.2, duration: 0.5 }}
-      style={{ overflow: 'hidden', padding: 0, transition: 'var(--transition)' }}
+      style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', padding: 0, transition: 'var(--transition)' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -88,7 +88,7 @@ const ProjectCard = ({ project, index }) => {
         isHovered={isHovered}
         imageFit={project.imageFit}
       />
-      <div style={{ padding: '25px' }}>
+      <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
           {project.tags.map(tag => (
             <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
@@ -100,7 +100,7 @@ const ProjectCard = ({ project, index }) => {
           <h3 style={{ fontSize: '1.5rem', margin: 0, wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
         </div>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '20px' }}>{project.description}</p>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '15px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '15px', marginTop: 'auto' }}>
           <div style={{ display: 'flex', gap: '15px' }}>
             {project.github && (
               <a href={project.github} className="project-link" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem', fontWeight: 600, transition: 'var(--transition)' }}>

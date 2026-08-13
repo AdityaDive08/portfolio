@@ -10,7 +10,16 @@ export const submitResumeDownload = async (companyName, email) => {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to save details');
+    let errorMessage = 'Failed to save details';
+    try {
+      const errorData = await response.json();
+      if (errorData && errorData.error) {
+        errorMessage = errorData.error;
+      }
+    } catch (e) {
+      // ignore
+    }
+    throw new Error(errorMessage);
   }
 
   return await response.json();

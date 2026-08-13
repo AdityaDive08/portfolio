@@ -109,9 +109,9 @@ const submitContact = async (req, res) => {
         });
 
         if (adminError) {
-          console.error(`❌ Resend Admin Email Error: ${adminError.message || JSON.stringify(adminError)}`);
+          console.error(`Resend Admin Email Error: ${adminError.message || JSON.stringify(adminError)}`);
         } else {
-          console.log(`✅ Notification Email Sent to Aditya via Resend API! ID: ${adminData?.id}`);
+          console.log(`Notification Email Sent to Aditya via Resend API! ID: ${adminData?.id}`);
         }
 
         // B. Send Auto-Reply to Viewer via Resend API (HTTPS - No Railway Port Timeouts)
@@ -124,18 +124,18 @@ const submitContact = async (req, res) => {
         });
 
         if (viewerError) {
-          console.error(`❌ Resend Viewer Auto-Reply Note: ${viewerError.message || JSON.stringify(viewerError)}`);
+          console.error(`Resend Viewer Auto-Reply Note: ${viewerError.message || JSON.stringify(viewerError)}`);
         } else {
-          console.log(`✅ Auto-Reply Email Sent to Viewer (${email})! ID: ${viewerData?.id}`);
+          console.log(`Auto-Reply Email Sent to Viewer (${email})! ID: ${viewerData?.id}`);
         }
       } catch (resendErr) {
-        console.error(`❌ Resend Exception: ${resendErr.message}`);
+        console.error(`Resend Exception: ${resendErr.message}`);
       }
     } else {
       try {
         const transporter = getTransporter();
         const info = await transporter.sendMail(mailToAditya);
-        console.log(`✅ Notification Email Sent to Aditya! ID: ${info.messageId} | Response: ${info.response}`);
+        console.log(`Notification Email Sent to Aditya! ID: ${info.messageId} | Response: ${info.response}`);
         
         // Try auto-reply via Nodemailer
         try {
@@ -146,12 +146,12 @@ const submitContact = async (req, res) => {
             html: mailToViewer.html,
             text: mailToViewer.text
           });
-          console.log(`✅ Auto-Reply Sent to Viewer via Nodemailer!`);
+          console.log(`Auto-Reply Sent to Viewer via Nodemailer!`);
         } catch (viewerMailErr) {
-          console.error(`❌ Viewer Auto-Reply via Nodemailer failed: ${viewerMailErr.message}`);
+          console.error(`Viewer Auto-Reply via Nodemailer failed: ${viewerMailErr.message}`);
         }
       } catch (mailErr) {
-        console.error(`❌ Port 465 Failed: ${mailErr.message}. Retrying on Port 587...`);
+        console.error(`Port 465 Failed: ${mailErr.message}. Retrying on Port 587...`);
         try {
           const user = process.env.EMAIL_USER || 'adityaarundive@gmail.com';
           const pass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g, '') : '';
@@ -164,9 +164,9 @@ const submitContact = async (req, res) => {
             connectionTimeout: 15000
           });
           const fallbackInfo = await fallbackTransporter.sendMail(mailToAditya);
-          console.log(`✅ Notification Email Sent to Aditya via Port 587 Fallback! ID: ${fallbackInfo.messageId}`);
+          console.log(`Notification Email Sent to Aditya via Port 587 Fallback! ID: ${fallbackInfo.messageId}`);
         } catch (fallbackErr) {
-          console.error(`❌ Fallback Port 587 also failed: ${fallbackErr.message}`);
+          console.error(`Fallback Port 587 also failed: ${fallbackErr.message}`);
         }
       }
     }

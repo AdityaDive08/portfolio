@@ -95,7 +95,7 @@ export const userData = {
     {
       title: "AI Voice Assistant (HealthFreak)",
       duration: "Sept 2025 - Nov 2025",
-      description: "HealthFreak is an AI-powered healthcare platform that combines a smart medical assistant with real-time health tracking. Users can consult an AI through voice or text, monitor vital health metrics, visualize their progress with interactive dashboards, and access emergency SOS and nearby hospital services.",
+      description: "HealthFreak is an AI-powered web application is a healthcare platform that combines a smart medical assistant with real-time health tracking. Users can consult an AI through voice or text, monitor vital health metrics, visualize their progress with interactive dashboards, and access emergency SOS, Health Tracking, Ambulance and nearby hospital services.",
       images: [
         "/HealthFreak/img 1.png",
         "/HealthFreak/img 2.png",

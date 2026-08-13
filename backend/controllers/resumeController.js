@@ -3,9 +3,15 @@ const ResumeDownload = require('../models/ResumeDownload');
 const trackDownload = async (req, res) => {
   try {
     const { companyName, email } = req.body;
+    console.log(`Received download request → Company: "${companyName}", Email: "${email || 'none'}"`);
     
     if (!companyName) {
       return res.status(400).json({ error: 'Company Name is required' });
+    }
+
+    const exists = await ResumeDownload.checkIfExists(companyName);
+    if (exists) {
+      return res.status(400).json({ error: 'Resume has already present with same company name' });
     }
 
     const result = await ResumeDownload.create(companyName, email);

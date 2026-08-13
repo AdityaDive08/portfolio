@@ -24,27 +24,25 @@ const Certifications = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1, duration: 0.5 }}
-            style={{ padding: '30px', transition: 'var(--transition)' }}
+            style={{ padding: '30px', transition: 'var(--transition)', display: 'flex', alignItems: 'stretch', gap: '15px' }}
           >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-              <div style={{ padding: '15px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '15px', color: 'var(--primary-glow)' }}>
-                <Award size={32} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <h3 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>{cert.title}</h3>
-                <p style={{ color: 'var(--text-muted)', marginBottom: '15px', fontWeight: 500 }}>{cert.issuer}</p>
-                
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                    <Calendar size={14} />
-                    {cert.date}
-                  </div>
-                  {cert.link && cert.link !== '#' && (
-                    <a href={cert.link} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--secondary-glow)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 }}>
-                      View <ExternalLink size={14} />
-                    </a>
-                  )}
+            <div style={{ padding: '15px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '15px', color: 'var(--primary-glow)', alignSelf: 'flex-start' }}>
+              <Award size={32} />
+            </div>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>{cert.title}</h3>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '15px', fontWeight: 500 }}>{cert.issuer}</p>
+              
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                  <Calendar size={14} />
+                  {cert.date}
                 </div>
+                {cert.link && cert.link !== '#' && (
+                  <a href={cert.link} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--secondary-glow)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 }}>
+                    View <ExternalLink size={14} />
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>

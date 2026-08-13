@@ -16,18 +16,37 @@ const Navbar = () => {
 
   const navLinks = ['Home', 'About', 'Qualification', 'Skills', 'Projects', 'Certifications', 'Contact'];
 
+  const closeResumeModal = () => {
+    setShowResumeModal(false);
+    setResumeForm({ companyName: '', email: '' });
+    setResumeError('');
+    setResumeLoading(false);
+  };
+
   const handleResumeDownload = async (e) => {
     e.preventDefault();
-    if (!resumeForm.companyName.trim()) {
+    const trimmedCompanyName = resumeForm.companyName.trim();
+    if (!trimmedCompanyName) {
       setResumeError('Company Name is mandatory');
+      return;
+    }
+    
+    // Check client browser side (localStorage)
+    const downloadedCompanies = JSON.parse(localStorage.getItem('downloaded_companies') || '[]');
+    if (downloadedCompanies.map(c => c.toLowerCase()).includes(trimmedCompanyName.toLowerCase())) {
+      setResumeError('Resume already present');
       return;
     }
     
     setResumeLoading(true);
     setResumeError('');
     try {
-      await submitResumeDownload(resumeForm.companyName, resumeForm.email);
+      await submitResumeDownload(trimmedCompanyName, resumeForm.email);
       
+      // Add to localStorage
+      downloadedCompanies.push(trimmedCompanyName);
+      localStorage.setItem('downloaded_companies', JSON.stringify(downloadedCompanies));
+
       // Trigger download
       const link = document.createElement('a');
       link.href = '/AdityaDive_Resume.pdf';
@@ -36,8 +55,7 @@ const Navbar = () => {
       link.click();
       document.body.removeChild(link);
       
-      setShowResumeModal(false);
-      setResumeForm({ companyName: '', email: '' });
+      closeResumeModal();
     } catch (err) {
       setResumeError(err.message);
     } finally {
@@ -195,7 +213,7 @@ const Navbar = () => {
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
                 zIndex: 2000
               }}
-              onClick={() => setShowResumeModal(false)}
+              onClick={closeResumeModal}
             >
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -208,7 +226,7 @@ const Navbar = () => {
                 }}
                 onClick={e => e.stopPropagation()}
               >
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Want my Resume?</h3>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '20px' }}>Want my Resume ?</h3>
                 <form onSubmit={handleResumeDownload} style={{ display: 'flex', flexDirection: 'column', gap: '15px', textAlign: 'left' }}>
                   <div>
                     <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
@@ -243,7 +261,7 @@ const Navbar = () => {
                     <p style={{ color: '#ff4d4d', fontSize: '0.85rem', margin: '0' }}>{resumeError}</p>
                   )}
                   <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '10px' }}>
-                    <button type="button" onClick={() => setShowResumeModal(false)} className="btn btn-outline" disabled={resumeLoading}>
+                    <button type="button" onClick={closeResumeModal} className="btn btn-outline" disabled={resumeLoading}>
                       Cancel
                     </button>
                     <button type="submit" className="btn btn-primary" disabled={resumeLoading}>

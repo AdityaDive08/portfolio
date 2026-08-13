@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Send, CheckCircle, Phone } from 'lucide-react';
 import { userData } from '../models/dataModel';
 import { submitContactForm } from '../services/contactService';
 
 const Contact = () => {
   const [status, setStatus] = useState('idle');
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ const Contact = () => {
       if (true) {
         setStatus('sent');
         e.target.reset();
+        setShowThankYou(true);
         setTimeout(() => setStatus('idle'), 3000);
       } else {
         setStatus('idle');
@@ -59,8 +62,9 @@ const Contact = () => {
         <div>
           <h3 style={{ fontSize: '2rem', marginBottom: '20px' }}>Let's Connect..!</h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '30px' }}>
-            {/* I'm currently looking for internship opportunities and freelance projects.  */}
-            Whether you have a question or just want to say hi, I'll try my best to get back to you..!
+            I'm currently looking for job opportunities and freelance projects. 
+            Whether you have a question or just want to say hi,
+            I'll try my best to get back to you..!
           </p>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
@@ -105,6 +109,57 @@ const Contact = () => {
           </button>
         </form>
       </motion.div>
+
+      {/* Thank You Modal */}
+      {createPortal(
+        <AnimatePresence>
+          {showThankYou && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(0, 0, 0, 0.8)', backdropFilter: 'blur(5px)',
+                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                zIndex: 2000
+              }}
+              onClick={() => setShowThankYou(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                style={{
+                  background: 'var(--bg-card)', border: '1px solid rgba(255,255,255,0.1)',
+                  padding: '40px 30px', borderRadius: '20px', textAlign: 'center',
+                  maxWidth: '400px', width: '90%', display: 'flex', flexDirection: 'column',
+                  alignItems: 'center', gap: '20px'
+                }}
+                onClick={e => e.stopPropagation()}
+              >
+                <div style={{ color: '#10b981', background: 'rgba(16, 185, 129, 0.1)', padding: '20px', borderRadius: '50%', display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <CheckCircle size={48} />
+                </div>
+                <h3 style={{ fontSize: '1.8rem', margin: 0, color: 'var(--text-main)' }}>Thank You!</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0, lineHeight: 1.5 }}>
+                  Your response has been saved successfully. I will get back to you soon!
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '10px' }}>
+                  <button 
+                    onClick={() => setShowThankYou(false)} 
+                    className="btn btn-primary"
+                    style={{ minWidth: '120px', alignSelf: 'center' }}
+                  >
+                    Close
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       <style>{`
         .contact-layout { grid-template-columns: 1fr 1.5fr; }
