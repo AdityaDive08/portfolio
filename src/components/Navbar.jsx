@@ -34,7 +34,7 @@ const Navbar = () => {
     // Check client browser side (localStorage)
     const downloadedCompanies = JSON.parse(localStorage.getItem('downloaded_companies') || '[]');
     if (downloadedCompanies.map(c => c.toLowerCase()).includes(trimmedCompanyName.toLowerCase())) {
-      setResumeError('Resume already present');
+      setResumeError('Resume already present with this company name');
       return;
     }
     
