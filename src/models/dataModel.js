@@ -16,6 +16,14 @@ export const userData = {
   ],
   education: [
      {
+      role: "Freelance Developer",
+      company: "Self-Employed",
+      icon: "Laptop",
+      project: "ShivMalhar Cab Service",
+      projectUrl: "https://www.shivmalharcabservice.in/",
+      duration: "2024 - Present"
+    },
+     {
       role: "Intern Software Developer",
       company: "Aquil Tech Labs",
       icon: "Briefcase",

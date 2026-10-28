@@ -49,7 +49,9 @@ function App() {
       <footer className="site-footer">
         <div className="footer-container">
           <div className="footer-left">
-            <span className="footer-logo">AD<span className="dot">.</span></span>
+            <span className="footer-logo">
+              <span>A</span><span style={{ color: 'var(--primary-blue)' }}>D</span><span className="dot">.</span>
+            </span>
             <p className="footer-text">
               &copy; {new Date().getFullYear()} Designed &amp; Developed by <strong>Aditya Dive</strong>.
             </p>

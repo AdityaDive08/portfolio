@@ -122,10 +122,12 @@ const Navbar = () => {
             href="#home" 
             onClick={(e) => handleLinkClick(e, 'home')}
             className="navbar-brand"
+            aria-label="Aditya Dive Home"
           >
-            <span className="brand-name">
-              {userData.name}
-              <span className="brand-dot">.</span>
+            <span className="brand-logo">
+              <span className="logo-letter-a">A</span>
+              <span className="logo-letter-d">D</span>
+              <span className="logo-dot">.</span>
             </span>
           </a>
 
@@ -352,20 +354,35 @@ const Navbar = () => {
         .navbar-brand {
           display: flex;
           align-items: center;
-          gap: 10px;
           text-decoration: none;
           flex-shrink: 0;
         }
 
-        .brand-name {
+        .brand-logo {
           font-family: var(--font-heading);
           font-weight: 800;
-          font-size: 1.25rem;
-          color: var(--text-main);
-          letter-spacing: -0.02em;
+          font-size: 1.75rem;
+          letter-spacing: -0.04em;
+          line-height: 1;
+          display: inline-flex;
+          align-items: baseline;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          user-select: none;
         }
 
-        .brand-dot {
+        .brand-logo:hover {
+          transform: scale(1.06);
+        }
+
+        .logo-letter-a {
+          color: var(--text-main);
+        }
+
+        .logo-letter-d {
+          color: var(--primary-blue);
+        }
+
+        .logo-dot {
           color: var(--primary-blue);
         }
 

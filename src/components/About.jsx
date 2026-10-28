@@ -105,7 +105,12 @@ const About = () => {
                     
                     {edu.project && (
                       <div className="timeline-project-row">
-                        <a href="#projects" className="project-redirect">
+                        <a 
+                          href={edu.projectUrl || '#projects'} 
+                          target={edu.projectUrl ? '_blank' : '_self'}
+                          rel={edu.projectUrl ? 'noopener noreferrer' : undefined}
+                          className="project-redirect"
+                        >
                           <span>Project: <strong>{edu.project}</strong></span>
                           <Icons.ArrowRight size={14} className="redirect-arrow" />
                         </a>
