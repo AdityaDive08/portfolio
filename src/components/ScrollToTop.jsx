@@ -5,7 +5,6 @@ import { ArrowUp } from 'lucide-react';
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Show button when page is scrolled down
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
@@ -15,11 +14,10 @@ const ScrollToTop = () => {
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
-  // Scroll to top handler
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -32,34 +30,39 @@ const ScrollToTop = () => {
       {isVisible && (
         <motion.button
           onClick={scrollToTop}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          whileHover={{ scale: 1.1, backgroundColor: 'rgba(37, 99, 235, 1)' }}
-          whileTap={{ scale: 0.9 }}
-          style={{
-            position: 'fixed',
-            bottom: '30px',
-            right: '30px',
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            backgroundColor: 'rgba(37, 99, 235, 0.8)',
-            color: 'white',
-            border: 'none',
-            outline: 'none',
-            cursor: 'pointer',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-            zIndex: 999,
-            backdropFilter: 'blur(5px)',
-            transition: 'background-color 0.3s ease',
-          }}
-          aria-label="Scroll to top"
+          initial={{ opacity: 0, scale: 0.8, y: 15 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: 15 }}
+          whileHover={{ scale: 1.08, y: -2 }}
+          whileTap={{ scale: 0.95 }}
+          className="scroll-to-top-btn"
+          aria-label="Scroll back to top"
         >
-          <ArrowUp size={24} />
+          <ArrowUp size={20} />
+          <style>{`
+            .scroll-to-top-btn {
+              position: fixed;
+              bottom: 28px;
+              right: 28px;
+              width: 46px;
+              height: 46px;
+              border-radius: 50%;
+              background: linear-gradient(135deg, #2563eb, #1d4ed8);
+              color: #ffffff;
+              border: 1px solid rgba(255, 255, 255, 0.3);
+              outline: none;
+              cursor: pointer;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+              z-index: 999;
+              transition: box-shadow 0.2s ease;
+            }
+            .scroll-to-top-btn:hover {
+              box-shadow: 0 12px 28px rgba(37, 99, 235, 0.45);
+            }
+          `}</style>
         </motion.button>
       )}
     </AnimatePresence>

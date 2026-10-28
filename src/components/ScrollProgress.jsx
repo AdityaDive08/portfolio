@@ -17,11 +17,11 @@ const ScrollProgress = () => {
         top: 0,
         left: 0,
         right: 0,
-        height: '4px',
-        background: 'var(--gradient-accent)',
+        height: '3.5px',
+        background: 'linear-gradient(90deg, #2563eb, #38bdf8, #1d4ed8)',
         transformOrigin: '0%',
         zIndex: 9999,
-        boxShadow: '0 0 10px var(--primary-glow)'
+        boxShadow: '0 1px 8px rgba(37, 99, 235, 0.35)'
       }}
     />
   );

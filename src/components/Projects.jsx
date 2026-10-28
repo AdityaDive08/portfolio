@@ -13,7 +13,7 @@ const ImageCarousel = ({ images, title, isHovered, imageFit = 'cover' }) => {
     if (isHovered && autoPlay && images.length > 1) {
       interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
-      }, 2000);
+      }, 2200);
     }
     return () => clearInterval(interval);
   }, [isHovered, autoPlay, images.length]);
@@ -35,32 +35,38 @@ const ImageCarousel = ({ images, title, isHovered, imageFit = 'cover' }) => {
   if (!images || images.length === 0) return null;
 
   return (
-    <div 
-      style={{ width: '100%', height: '220px', position: 'relative', overflow: 'hidden' }}
-    >
+    <div className="project-image-wrapper">
       <img 
         src={images[currentIndex]} 
         alt={title} 
         className="project-img"
-        style={{ width: '100%', height: '100%', objectFit: imageFit, backgroundColor: imageFit === 'contain' ? 'rgba(0,0,0,0.2)' : 'transparent', transition: 'transform 0.5s ease' }} 
+        style={{ objectFit: imageFit }} 
       />
+      {images.length > 1 && (
+        <div className="carousel-dots-indicator">
+          {images.map((_, i) => (
+            <span 
+              key={i} 
+              className={`carousel-dot ${i === currentIndex ? 'active' : ''}`}
+            />
+          ))}
+        </div>
+      )}
       {images.length > 1 && isHovered && (
         <>
           <button 
             onClick={prevImage}
-            style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.6)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.3s' }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--primary-glow)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.6)'}
+            className="carousel-btn btn-left"
+            aria-label="Previous image"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={18} />
           </button>
           <button 
             onClick={nextImage}
-            style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.6)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.3s' }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--primary-glow)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.6)'}
+            className="carousel-btn btn-right"
+            aria-label="Next image"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={18} />
           </button>
         </>
       )}
@@ -74,11 +80,10 @@ const ProjectCard = ({ project, index }) => {
   return (
     <motion.div 
       className="project-card glass-panel"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 35 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.2, duration: 0.5 }}
-      style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', padding: 0, transition: 'var(--transition)' }}
+      transition={{ delay: index * 0.12, duration: 0.5 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -88,30 +93,41 @@ const ProjectCard = ({ project, index }) => {
         isHovered={isHovered}
         imageFit={project.imageFit}
       />
-      <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
+      <div className="project-body">
+        {/* Tags */}
+        <div className="project-tags">
           {project.tags.map(tag => (
-            <span key={tag} style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--secondary-glow)', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '20px' }}>
+            <span key={tag} className="project-tag-pill">
               {tag}
             </span>
           ))}
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-          <h3 style={{ fontSize: '1.5rem', margin: 0, wordWrap: 'break-word', overflowWrap: 'break-word' }}>{project.title}</h3>
-        </div>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '20px' }}>{project.description}</p>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '15px', marginTop: 'auto' }}>
-          <div style={{ display: 'flex', gap: '15px' }}>
+
+        {/* Title */}
+        <h3 className="project-title">{project.title}</h3>
+
+        {/* Description */}
+        <p className="project-desc">{project.description}</p>
+
+        {/* Footer Actions */}
+        <div className="project-footer">
+          <div className="project-actions">
             {project.github && (
-              <a href={project.github} className="project-link" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem', fontWeight: 600, transition: 'var(--transition)' }}>
-                <FaGithub size={18} /> Code
+              <a 
+                href={project.github} 
+                target="_blank" 
+                rel="noreferrer"
+                className="project-code-btn"
+              >
+                <FaGithub size={16} />
+                <span>Source Code</span>
               </a>
             )}
           </div>
           {project.duration && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--primary-glow)', background: 'rgba(37, 99, 235, 0.15)', padding: '4px 10px', borderRadius: '20px', border: '1px solid rgba(37, 99, 235, 0.3)' }}>
-              <Calendar size={12} />
-              {project.duration}
+            <span className="project-duration-badge">
+              <Calendar size={13} />
+              <span>{project.duration}</span>
             </span>
           )}
         </div>
@@ -136,37 +152,36 @@ const Projects = () => {
     : userData.projects.filter(project => 
         project.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
       );
+
   return (
     <section id="projects" className="section">
       <motion.div 
         className="section-heading"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
         <h2>Featured <span className="gradient-text">Projects</span></h2>
+        <p className="section-subheading">A showcase of full stack web applications and software solutions</p>
       </motion.div>
       
+      {/* Active Filter Pill */}
       <AnimatePresence>
         {filter !== 'All' && (
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}
+            className="filter-banner-wrapper"
           >
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '10px',
-              background: 'rgba(59, 130, 246, 0.1)', border: '1px solid var(--primary-glow)',
-              padding: '8px 20px', borderRadius: '30px', color: '#fff'
-            }}>
-              <span>Filtering by: <strong style={{ color: 'var(--primary-glow)' }}>{filter}</strong></span>
+            <div className="filter-active-pill">
+              <span>Showing projects tagged with: <strong>{filter}</strong></span>
               <button 
                 onClick={() => setFilter('All')}
-                style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                className="filter-clear-btn"
                 title="Clear filter"
               >
-                <X size={16} />
+                <X size={15} />
               </button>
             </div>
           </motion.div>
@@ -183,12 +198,11 @@ const Projects = () => {
             />
           ))
         ) : (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '50px 20px', color: 'var(--text-muted)' }}>
-            <p style={{ fontSize: '1.1rem' }}>No projects found using {filter}.</p>
+          <div className="no-projects-box">
+            <p>No projects found matching "{filter}".</p>
             <button 
               onClick={() => setFilter('All')} 
               className="btn btn-outline"
-              style={{ marginTop: '20px' }}
             >
               View All Projects
             </button>
@@ -200,20 +214,256 @@ const Projects = () => {
         .projects-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 40px;
+          gap: 32px;
+          max-width: 1200px;
+          margin: 0 auto;
+          width: 100%;
         }
-        @media (max-width: 1024px) {
+
+        @media (max-width: 1080px) {
           .projects-grid {
             grid-template-columns: repeat(2, 1fr);
           }
         }
-        @media (max-width: 768px) {
+
+        @media (max-width: 720px) {
           .projects-grid {
             grid-template-columns: 1fr;
           }
         }
-        .project-card:hover { transform: translateY(-10px) !important; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(37, 99, 235, 0.3); }
-        .project-link:hover { color: var(--primary-glow); }
+
+        .project-card {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 20px;
+          overflow: hidden;
+          padding: 0;
+          box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-card:hover {
+          transform: translateY(-6px);
+          border-color: rgba(37, 99, 235, 0.35);
+          box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+        }
+
+        .project-image-wrapper {
+          width: 100%;
+          height: 215px;
+          position: relative;
+          overflow: hidden;
+          background: #f1f5f9;
+          border-bottom: 1px solid #f1f5f9;
+        }
+
+        .project-img {
+          width: 100%;
+          height: 100%;
+          transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-img {
+          transform: scale(1.03);
+        }
+
+        .carousel-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(4px);
+          border: 1px solid #e2e8f0;
+          color: var(--text-main);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 10;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+        }
+
+        .carousel-btn:hover {
+          background: var(--primary-blue);
+          color: #ffffff;
+          border-color: transparent;
+        }
+
+        .btn-left {
+          left: 10px;
+        }
+
+        .btn-right {
+          right: 10px;
+        }
+
+        .carousel-dots-indicator {
+          position: absolute;
+          bottom: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 6px;
+          z-index: 5;
+        }
+
+        .carousel-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.6);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+          transition: all 0.2s ease;
+        }
+
+        .carousel-dot.active {
+          width: 16px;
+          border-radius: 9999px;
+          background: #2563eb;
+        }
+
+        .project-body {
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+
+        .project-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 14px;
+        }
+
+        .project-tag-pill {
+          font-size: 0.74rem;
+          font-weight: 600;
+          color: #1d4ed8;
+          background: #eff6ff;
+          border: 1px solid #dbeafe;
+          padding: 4px 10px;
+          border-radius: 9999px;
+          letter-spacing: 0.2px;
+        }
+
+        .project-title {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: var(--text-main);
+          margin-bottom: 10px;
+          line-height: 1.35;
+        }
+
+        .project-desc {
+          color: var(--text-muted);
+          font-size: 0.94rem;
+          line-height: 1.6;
+          margin-bottom: 22px;
+        }
+
+        .project-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          margin-top: auto;
+          padding-top: 16px;
+          border-top: 1px solid #f1f5f9;
+        }
+
+        .project-code-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          font-size: 0.88rem;
+          font-weight: 600;
+          color: var(--text-secondary);
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
+
+        .project-code-btn:hover {
+          color: var(--primary-blue);
+        }
+
+        .project-duration-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #1d4ed8;
+          background: #eff6ff;
+          padding: 4px 10px;
+          border-radius: 9999px;
+          border: 1px solid #bfdbfe;
+        }
+
+        /* Filter Banner */
+        .filter-banner-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 30px;
+        }
+
+        .filter-active-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: #eff6ff;
+          border: 1px solid #bfdbfe;
+          color: #1e293b;
+          padding: 8px 18px;
+          border-radius: 9999px;
+          font-size: 0.92rem;
+          box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+        }
+
+        .filter-active-pill strong {
+          color: var(--primary-blue);
+        }
+
+        .filter-clear-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #dbeafe;
+          border: none;
+          color: #1d4ed8;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .filter-clear-btn:hover {
+          background: #2563eb;
+          color: #ffffff;
+        }
+
+        .no-projects-box {
+          grid-column: 1 / -1;
+          text-align: center;
+          padding: 60px 20px;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 20px;
+        }
+
+        .no-projects-box p {
+          color: var(--text-muted);
+          font-size: 1.1rem;
+          margin-bottom: 20px;
+        }
       `}</style>
     </section>
   );
