@@ -72,7 +72,7 @@ const Hero = () => {
           
           {/* Social Links */}
           <motion.div variants={itemVariants} className="hero-socials-wrapper">
-            <span className="socials-label">Connect:</span>
+            {/* <span className="socials-label">Connect:</span> */}
             <div className="socials-list">
               {socials.map((item, idx) => (
                 <a 

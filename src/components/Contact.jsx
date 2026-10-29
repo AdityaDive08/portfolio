@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, MapPin, Send, CheckCircle, Phone, Clock, ArrowRight } from 'lucide-react';
+import { Mail, MapPin, Send, CheckCircle, Phone, User, MessageSquare, AlertCircle, Loader2 } from 'lucide-react';
 import { userData } from '../models/dataModel';
 import { submitContactForm } from '../services/contactService';
 
 const Contact = () => {
   const [status, setStatus] = useState('idle');
   const [showThankYou, setShowThankYou] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
+    setErrorMessage('');
     
     const formData = new FormData(e.target);
     const data = {
@@ -30,7 +32,7 @@ const Contact = () => {
     } catch (error) {
       console.error('Error:', error);
       setStatus('idle');
-      alert(`Error sending message: ${error.message}`);
+      setErrorMessage(error.message || 'Failed to send message. Please try again.');
     }
   };
 
@@ -53,12 +55,12 @@ const Contact = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        {/* Left Column: Contact Info */}
+        {/* Left Column: Contact Info (Email, Call/WhatsApp, Location) */}
         <div className="contact-info-col">
           <div className="contact-info-header">
-            <h3>Let's build something great together</h3>
+            <h3>Let's Connect!</h3>
             <p>
-              I'm actively seeking software developer opportunities and challenging web development projects. Feel free to reach out directly or drop a message via the form!
+              I'm actively seeking software developer opportunities and challenging web development projects. Feel free to reach out directly or send a message via the form!
             </p>
           </div>
           
@@ -68,13 +70,18 @@ const Contact = () => {
                 <Mail size={20} />
               </div>
               <div className="contact-detail-text">
-                <span className="detail-label">Email Me</span>
+                <span className="detail-label">Email</span>
                 <span className="detail-value">{userData.email}</span>
               </div>
             </a>
             
             {userData.phone && (
-              <a href={`tel:${userData.phone}`} className="contact-detail-item">
+              <a 
+                href={`https://wa.me/${userData.phone.replace(/[^0-9]/g, '')}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="contact-detail-item"
+              >
                 <div className="contact-icon-box">
                   <Phone size={20} />
                 </div>
@@ -94,39 +101,64 @@ const Contact = () => {
                 <span className="detail-value">{userData.location}</span>
               </div>
             </div>
-
-            <div className="contact-detail-item">
-              <div className="contact-icon-box">
-                <Clock size={20} />
-              </div>
-              <div className="contact-detail-text">
-                <span className="detail-label">Response Time</span>
-                <span className="detail-value">Usually within 24 hours</span>
-              </div>
-            </div>
           </div>
         </div>
         
         {/* Right Column: Contact Form */}
         <div className="contact-form-col">
+          <div className="form-header">
+            <h4>Send a Message</h4>
+            <p>Fill out the details below and I'll get back to you promptly.</p>
+          </div>
+
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-row">
               <div className="input-group">
-                <label>Your Name <span className="req">*</span></label>
-                <input 
-                  type="text" 
-                  name="name" 
-                  placeholder="e.g. John Doe" 
-                  required 
-                  className="contact-field" 
-                />
+                <label htmlFor="contact-name">
+                  Your Name <span className="req">*</span>
+                </label>
+                <div className="input-wrapper">
+                  <User size={18} className="field-icon" />
+                  <input 
+                    id="contact-name"
+                    type="text" 
+                    name="name" 
+                    placeholder="e.g. Aditya Dive" 
+                    required 
+                    className="contact-field" 
+                  />
+                </div>
               </div>
+
               <div className="input-group">
-                <label>Your Email <span className="req">*</span></label>
+                <label htmlFor="contact-email">
+                  Your Email <span className="req">*</span>
+                </label>
+                <div className="input-wrapper">
+                  <Mail size={18} className="field-icon" />
+                  <input 
+                    id="contact-email"
+                    type="email" 
+                    name="email" 
+                    placeholder="adityaarundive@gmail.com" 
+                    required 
+                    className="contact-field" 
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="contact-subject">
+                Subject <span className="req">*</span>
+              </label>
+              <div className="input-wrapper">
+                <MessageSquare size={18} className="field-icon" />
                 <input 
-                  type="email" 
-                  name="email" 
-                  placeholder="name@example.com" 
+                  id="contact-subject"
+                  type="text" 
+                  name="subject" 
+                  placeholder="Job Opportunity / Project Collaboration" 
                   required 
                   className="contact-field" 
                 />
@@ -134,19 +166,11 @@ const Contact = () => {
             </div>
 
             <div className="input-group">
-              <label>Subject <span className="req">*</span></label>
-              <input 
-                type="text" 
-                name="subject" 
-                placeholder="Job Opportunity / Project Collaboration" 
-                required 
-                className="contact-field" 
-              />
-            </div>
-
-            <div className="input-group">
-              <label>Message <span className="req">*</span></label>
+              <label htmlFor="contact-message">
+                Message <span className="req">*</span>
+              </label>
               <textarea 
+                id="contact-message"
                 name="message" 
                 rows="5" 
                 placeholder="Hi Aditya, I came across your portfolio and would like to talk about..." 
@@ -154,6 +178,13 @@ const Contact = () => {
                 className="contact-field contact-textarea" 
               />
             </div>
+
+            {errorMessage && (
+              <div className="form-error-banner">
+                <AlertCircle size={18} />
+                <span>{errorMessage}</span>
+              </div>
+            )}
             
             <button 
               type="submit" 
@@ -162,17 +193,20 @@ const Contact = () => {
             >
               {status === 'idle' && (
                 <>
-                  <Send size={17} />
+                  <Send size={18} />
                   <span>Send Message</span>
                 </>
               )}
               {status === 'sending' && (
-                <span>Sending Message...</span>
+                <>
+                  <Loader2 size={18} className="spin-loader" />
+                  <span>Sending Message...</span>
+                </>
               )}
               {status === 'sent' && (
                 <>
-                  <CheckCircle size={17} />
-                  <span>Message Sent!</span>
+                  <CheckCircle size={18} />
+                  <span>Message Sent Successfully!</span>
                 </>
               )}
             </button>
@@ -258,24 +292,25 @@ const Contact = () => {
           display: flex;
           align-items: center;
           gap: 16px;
-          padding: 12px 16px;
+          padding: 14px 18px;
           background: #f8fafc;
           border: 1px solid #e2e8f0;
           border-radius: 16px;
           text-decoration: none;
           color: inherit;
-          transition: all 0.2s ease;
+          transition: all 0.25s ease;
         }
 
         .contact-detail-item:hover {
           background: #eff6ff;
           border-color: #bfdbfe;
           transform: translateX(4px);
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
         }
 
         .contact-icon-box {
-          width: 44px;
-          height: 44px;
+          width: 46px;
+          height: 46px;
           border-radius: 12px;
           background: #eff6ff;
           border: 1px solid #dbeafe;
@@ -289,6 +324,7 @@ const Contact = () => {
         .contact-detail-text {
           display: flex;
           flex-direction: column;
+          gap: 2px;
         }
 
         .detail-label {
@@ -300,12 +336,36 @@ const Contact = () => {
         }
 
         .detail-value {
-          font-size: 0.95rem;
+          font-size: 0.96rem;
           font-weight: 600;
           color: var(--text-main);
+          word-break: break-word;
         }
 
         /* Form Column */
+        .contact-form-col {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .form-header {
+          margin-bottom: 22px;
+        }
+
+        .form-header h4 {
+          font-size: 1.35rem;
+          font-weight: 700;
+          color: var(--text-main);
+          margin-bottom: 6px;
+          letter-spacing: -0.01em;
+        }
+
+        .form-header p {
+          color: var(--text-muted);
+          font-size: 0.92rem;
+          margin: 0;
+        }
+
         .contact-form {
           display: flex;
           flex-direction: column;
@@ -321,7 +381,7 @@ const Contact = () => {
         .input-group {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 7px;
         }
 
         .input-group label {
@@ -334,17 +394,43 @@ const Contact = () => {
           color: var(--primary-blue);
         }
 
+        .input-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+
+        .field-icon {
+          position: absolute;
+          left: 14px;
+          color: var(--text-light);
+          pointer-events: none;
+          transition: color 0.2s ease;
+        }
+
+        .input-wrapper .contact-field {
+          padding-left: 42px;
+        }
+
+        .input-wrapper:focus-within .field-icon {
+          color: var(--primary-blue);
+        }
+
         .contact-field {
           width: 100%;
-          padding: 13px 18px;
+          padding: 13px 16px;
           background: #f8fafc;
-          border: 1.5px solid #cbd5e1;
+          border: 1.5px solid #e2e8f0;
           border-radius: 12px;
           color: var(--text-main);
           font-family: var(--font-body);
           font-size: 0.95rem;
           transition: all 0.2s ease;
           outline: none;
+        }
+
+        .contact-field::placeholder {
+          color: var(--text-light);
         }
 
         .contact-field:focus {
@@ -355,13 +441,39 @@ const Contact = () => {
 
         .contact-textarea {
           resize: vertical;
-          min-height: 120px;
+          min-height: 125px;
+          line-height: 1.5;
+        }
+
+        .form-error-banner {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 16px;
+          background: #fef2f2;
+          border: 1px solid #fecaca;
+          color: #dc2626;
+          border-radius: 12px;
+          font-size: 0.9rem;
+          font-weight: 500;
         }
 
         .submit-btn {
-          margin-top: 6px;
-          padding: 13px 28px;
-          align-self: flex-start;
+          margin-top: 4px;
+          padding: 14px 28px;
+          width: 100%;
+          justify-content: center;
+          border-radius: 12px;
+          font-size: 1rem;
+        }
+
+        .spin-loader {
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
 
         /* Modal Styles */
@@ -431,9 +543,6 @@ const Contact = () => {
           }
           .form-row {
             grid-template-columns: 1fr;
-          }
-          .submit-btn {
-            width: 100%;
           }
         }
       `}</style>
