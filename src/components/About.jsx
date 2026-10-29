@@ -176,7 +176,7 @@ const About = () => {
         .about-stat-item:hover {
           transform: translateY(-4px);
           border-color: var(--primary-blue);
-          box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.12);
+          box-shadow: 0 8px 20px -4px rgba(21, 88, 201, 0.12);
           background: #ffffff;
         }
 
@@ -214,7 +214,7 @@ const About = () => {
           top: 0;
           bottom: 0;
           width: 2px;
-          background: linear-gradient(180deg, #bfdbfe 0%, #3b82f6 50%, #bfdbfe 100%);
+          background: linear-gradient(180deg, #bfdbfe 0%, #1558C9 50%, #bfdbfe 100%);
           transform: translateX(-50%);
           z-index: 1;
         }
@@ -241,7 +241,7 @@ const About = () => {
           background: #ffffff;
           color: var(--primary-blue);
           transform: translateX(-50%);
-          box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15), 0 4px 10px rgba(15, 23, 42, 0.08);
+          box-shadow: 0 0 0 4px rgba(21, 88, 201, 0.15), 0 4px 10px rgba(15, 23, 42, 0.08);
           border: 2px solid var(--primary-blue);
           z-index: 3;
           display: flex;
@@ -264,8 +264,8 @@ const About = () => {
         }
 
         .timeline-card:hover {
-          border-color: rgba(37, 99, 235, 0.4);
-          box-shadow: 0 12px 28px -6px rgba(37, 99, 235, 0.12);
+          border-color: rgba(21, 88, 201, 0.4);
+          box-shadow: 0 12px 28px -6px rgba(21, 88, 201, 0.12);
           transform: translateY(-3px);
         }
 
@@ -304,7 +304,7 @@ const About = () => {
           border-radius: 9999px;
           background: #eff6ff;
           border: 1px solid #bfdbfe;
-          color: #1d4ed8;
+          color: #1047a5;
           font-size: 0.78rem;
           font-weight: 600;
           white-space: nowrap;

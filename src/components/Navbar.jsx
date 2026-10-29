@@ -431,8 +431,8 @@ const Navbar = () => {
           position: absolute;
           inset: 0;
           border-radius: 9999px;
-          background: linear-gradient(135deg, #2563eb, #1d4ed8);
-          box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+          background: linear-gradient(135deg, #1558C9, #1047a5);
+          box-shadow: 0 3px 10px rgba(21, 88, 201, 0.3);
           z-index: 0;
         }
 
@@ -470,7 +470,7 @@ const Navbar = () => {
           color: #ffffff;
           border-color: transparent;
           transform: translateY(-1.5px);
-          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+          box-shadow: 0 4px 12px rgba(21, 88, 201, 0.3);
         }
 
         .mobile-toggle-btn {
@@ -635,7 +635,7 @@ const Navbar = () => {
         .form-control:focus {
           border-color: var(--primary-blue);
           background: #ffffff;
-          box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+          box-shadow: 0 0 0 4px rgba(21, 88, 201, 0.12);
         }
 
         .form-error-box {

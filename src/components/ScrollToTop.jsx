@@ -47,7 +47,7 @@ const ScrollToTop = () => {
               width: 46px;
               height: 46px;
               border-radius: 50%;
-              background: linear-gradient(135deg, #2563eb, #1d4ed8);
+              background: linear-gradient(135deg, #1558C9, #1047a5);
               color: #ffffff;
               border: 1px solid rgba(255, 255, 255, 0.3);
               outline: none;
@@ -55,12 +55,12 @@ const ScrollToTop = () => {
               display: flex;
               justify-content: center;
               align-items: center;
-              box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+              box-shadow: 0 8px 20px rgba(21, 88, 201, 0.35);
               z-index: 999;
               transition: box-shadow 0.2s ease;
             }
             .scroll-to-top-btn:hover {
-              box-shadow: 0 12px 28px rgba(37, 99, 235, 0.45);
+              box-shadow: 0 12px 28px rgba(21, 88, 201, 0.45);
             }
           `}</style>
         </motion.button>

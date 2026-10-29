@@ -16,29 +16,29 @@
   --text-muted: #64748b;      /* Slate 500 */
   --text-light: #94a3b8;      /* Slate 400 */
   
-  --primary-blue: #2563eb;    /* Royal Blue */
-  --primary-glow: #2563eb;
-  --primary-hover: #1d4ed8;   /* Darker Royal Blue */
-  --primary-active: #1e40af;
+  --primary-blue: #1558C9;    /* Electric Cobalt Blue */
+  --primary-glow: #1558C9;
+  --primary-hover: #1047a5;   /* Darker Cobalt Blue */
+  --primary-active: #0d3a87;
   --secondary-glow: #0284c7;  /* Azure / Sky Blue */
   --accent-cyan: #06b6d4;     /* Cyan */
   --accent-soft: #bfdbfe;
   
   --border-subtle: #e2e8f0;
   --border-card: #e2e8f0;
-  --border-blue: rgba(37, 99, 235, 0.2);
-  --border-hover: rgba(37, 99, 235, 0.5);
+  --border-blue: rgba(21, 88, 201, 0.2);
+  --border-hover: rgba(21, 88, 201, 0.5);
   
-  --gradient-accent: linear-gradient(135deg, #2563eb 0%, #1d4ed8 40%, #0284c7 100%);
-  --gradient-text: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #0284c7 100%);
+  --gradient-accent: linear-gradient(135deg, #1558C9 0%, #1047a5 40%, #0284c7 100%);
+  --gradient-text: linear-gradient(135deg, #1047a5 0%, #1558C9 50%, #0284c7 100%);
   --gradient-surface: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  --gradient-glow: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+  --gradient-glow: radial-gradient(circle, rgba(21, 88, 201, 0.12) 0%, transparent 70%);
 
   --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
   --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.05), 0 1px 3px -1px rgba(15, 23, 42, 0.03);
-  --shadow-md: 0 8px 20px -4px rgba(37, 99, 235, 0.08), 0 3px 6px -2px rgba(15, 23, 42, 0.03);
-  --shadow-lg: 0 16px 32px -8px rgba(37, 99, 235, 0.12), 0 4px 10px -3px rgba(15, 23, 42, 0.04);
-  --shadow-hover: 0 20px 40px -10px rgba(37, 99, 235, 0.18), 0 6px 12px -4px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 20px -4px rgba(21, 88, 201, 0.08), 0 3px 6px -2px rgba(15, 23, 42, 0.03);
+  --shadow-lg: 0 16px 32px -8px rgba(21, 88, 201, 0.12), 0 4px 10px -3px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 20px 40px -10px rgba(21, 88, 201, 0.18), 0 6px 12px -4px rgba(15, 23, 42, 0.05);
 
   --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -65,11 +65,11 @@ body {
   overflow-x: hidden;
   /* Sophisticated white & blue textured mesh background - not generic AI */
   background-image: 
-    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.07) 0px, transparent 40%),
+    radial-gradient(at 0% 0%, rgba(21, 88, 201, 0.07) 0px, transparent 40%),
     radial-gradient(at 100% 5%, rgba(2, 132, 199, 0.07) 0px, transparent 45%),
     radial-gradient(at 50% 45%, rgba(219, 234, 254, 0.45) 0px, transparent 60%),
-    radial-gradient(at 90% 90%, rgba(37, 99, 235, 0.06) 0px, transparent 45%),
-    radial-gradient(circle at 1px 1px, rgba(37, 99, 235, 0.04) 1px, transparent 0);
+    radial-gradient(at 90% 90%, rgba(21, 88, 201, 0.06) 0px, transparent 45%),
+    radial-gradient(circle at 1px 1px, rgba(21, 88, 201, 0.04) 1px, transparent 0);
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 32px 32px;
   background-attachment: fixed;
 }
@@ -168,20 +168,20 @@ ul {
 .btn-primary {
   background: var(--gradient-accent);
   color: #ffffff !important;
-  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.35);
+  box-shadow: 0 4px 14px 0 rgba(21, 88, 201, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px 0 rgba(37, 99, 235, 0.45);
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 0 8px 22px 0 rgba(21, 88, 201, 0.45);
+  background: linear-gradient(135deg, #1047a5 0%, #0d3a87 100%);
 }
 
 .btn-outline {
   background: #ffffff;
   color: var(--primary-blue) !important;
-  border: 1.5px solid rgba(37, 99, 235, 0.3);
+  border: 1.5px solid rgba(21, 88, 201, 0.3);
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
@@ -190,7 +190,7 @@ ul {
   border-color: var(--primary-blue);
   color: var(--primary-hover) !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 6px 16px rgba(21, 88, 201, 0.15);
 }
 
 /* Human-designed white & blue glass panel */

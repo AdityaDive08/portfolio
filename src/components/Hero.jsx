@@ -104,11 +104,11 @@ const Hero = () => {
             {/* Profile Frame */}
             <div className="profile-frame">
               <img 
-                src="/profile.jpg" 
+                src="/adityadive.webp" 
                 alt={userData.name} 
                 className="profile-photo"
                 onError={(e) => {
-                  e.target.src = "https://ui-avatars.com/api/?name=Aditya+Dive&size=512&background=eff6ff&color=2563eb&bold=true";
+                  e.target.src = "https://ui-avatars.com/api/?name=Aditya+Dive&size=512&background=eff6ff&color=1558C9&bold=true";
                 }}
               />
             </div>
@@ -276,7 +276,7 @@ const Hero = () => {
           color: #ffffff !important;
           border-color: transparent;
           transform: translateY(-3px);
-          box-shadow: 0 8px 18px rgba(37, 99, 235, 0.3);
+          box-shadow: 0 8px 18px rgba(21, 88, 201, 0.3);
         }
 
         /* Profile Visual Side */
@@ -300,7 +300,7 @@ const Hero = () => {
           position: absolute;
           inset: 0;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(37, 99, 235, 0.22) 0%, rgba(56, 189, 248, 0.12) 50%, transparent 75%);
+          background: radial-gradient(circle, rgba(21, 88, 201, 0.22) 0%, rgba(56, 189, 248, 0.12) 50%, transparent 75%);
           filter: blur(35px);
           z-index: 0;
           animation: pulse-ambient 4s ease-in-out infinite alternate;
@@ -318,8 +318,8 @@ const Hero = () => {
           height: 320px;
           border-radius: 50%;
           padding: 6px;
-          background: linear-gradient(135deg, #2563eb, #38bdf8, #818cf8);
-          box-shadow: 0 20px 45px -10px rgba(37, 99, 235, 0.25);
+          background: linear-gradient(135deg, #1558C9, #38bdf8, #818cf8);
+          box-shadow: 0 20px 45px -10px rgba(21, 88, 201, 0.25);
           transition: transform 0.4s ease;
         }
 
@@ -349,7 +349,7 @@ const Hero = () => {
           padding: 8px 15px;
           border-radius: 9999px;
           border: 1px solid rgba(226, 232, 240, 0.95);
-          box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(37, 99, 235, 0.06);
+          box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(21, 88, 201, 0.06);
           transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
           user-select: none;
           white-space: nowrap;
@@ -357,8 +357,8 @@ const Hero = () => {
 
         .floating-tech-badge:hover {
           transform: scale(1.08) !important;
-          border-color: rgba(37, 99, 235, 0.45);
-          box-shadow: 0 12px 28px -4px rgba(37, 99, 235, 0.22);
+          border-color: rgba(21, 88, 201, 0.45);
+          box-shadow: 0 12px 28px -4px rgba(21, 88, 201, 0.22);
         }
 
         .tech-badge-icon {
@@ -367,11 +367,11 @@ const Hero = () => {
           justify-content: center;
         }
 
-        .icon-backend { color: #2563eb; }
+        .icon-backend { color: #1558C9; }
         .icon-node { color: #16a34a; }
         .icon-react { color: #0284c7; }
         .icon-express { color: #0f172a; }
-        .icon-sql { color: #2563eb; }
+        .icon-sql { color: #1558C9; }
 
         .tech-badge-text {
           font-size: 0.85rem;

@@ -305,7 +305,7 @@ const Contact = () => {
           background: #eff6ff;
           border-color: #bfdbfe;
           transform: translateX(4px);
-          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+          box-shadow: 0 4px 12px rgba(21, 88, 201, 0.08);
         }
 
         .contact-icon-box {
@@ -436,7 +436,7 @@ const Contact = () => {
         .contact-field:focus {
           border-color: var(--primary-blue);
           background: #ffffff;
-          box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+          box-shadow: 0 0 0 4px rgba(21, 88, 201, 0.12);
         }
 
         .contact-textarea {

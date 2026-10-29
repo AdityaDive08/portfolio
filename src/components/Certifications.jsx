@@ -79,8 +79,8 @@ const Certifications = () => {
 
         .cert-card:hover {
           transform: translateY(-4px);
-          border-color: rgba(37, 99, 235, 0.4);
-          box-shadow: 0 16px 32px -8px rgba(37, 99, 235, 0.12);
+          border-color: rgba(21, 88, 201, 0.4);
+          box-shadow: 0 16px 32px -8px rgba(21, 88, 201, 0.12);
         }
 
         .cert-icon-wrapper {

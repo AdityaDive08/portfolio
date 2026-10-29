@@ -247,8 +247,8 @@ const Projects = () => {
 
         .project-card:hover {
           transform: translateY(-6px);
-          border-color: rgba(37, 99, 235, 0.35);
-          box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+          border-color: rgba(21, 88, 201, 0.35);
+          box-shadow: 0 20px 40px -10px rgba(21, 88, 201, 0.15);
         }
 
         .project-image-wrapper {
@@ -326,7 +326,7 @@ const Projects = () => {
         .carousel-dot.active {
           width: 16px;
           border-radius: 9999px;
-          background: #2563eb;
+          background: #1558C9;
         }
 
         .project-body {
@@ -346,7 +346,7 @@ const Projects = () => {
         .project-tag-pill {
           font-size: 0.74rem;
           font-weight: 600;
-          color: #1d4ed8;
+          color: #1047a5;
           background: #eff6ff;
           border: 1px solid #dbeafe;
           padding: 4px 10px;
@@ -400,7 +400,7 @@ const Projects = () => {
           gap: 5px;
           font-size: 0.75rem;
           font-weight: 600;
-          color: #1d4ed8;
+          color: #1047a5;
           background: #eff6ff;
           padding: 4px 10px;
           border-radius: 9999px;
@@ -424,7 +424,7 @@ const Projects = () => {
           padding: 8px 18px;
           border-radius: 9999px;
           font-size: 0.92rem;
-          box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+          box-shadow: 0 2px 8px rgba(21, 88, 201, 0.08);
         }
 
         .filter-active-pill strong {
@@ -440,13 +440,13 @@ const Projects = () => {
           border-radius: 50%;
           background: #dbeafe;
           border: none;
-          color: #1d4ed8;
+          color: #1047a5;
           cursor: pointer;
           transition: all 0.2s ease;
         }
 
         .filter-clear-btn:hover {
-          background: #2563eb;
+          background: #1558C9;
           color: #ffffff;
         }
 

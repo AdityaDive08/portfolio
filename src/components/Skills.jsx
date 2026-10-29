@@ -87,8 +87,8 @@ const Skills = () => {
         }
 
         .skill-category-card:hover {
-          border-color: rgba(37, 99, 235, 0.4);
-          box-shadow: 0 16px 32px -8px rgba(37, 99, 235, 0.12);
+          border-color: rgba(21, 88, 201, 0.4);
+          box-shadow: 0 16px 32px -8px rgba(21, 88, 201, 0.12);
           transform: translateY(-4px);
         }
 
@@ -149,7 +149,7 @@ const Skills = () => {
           border-color: transparent;
           color: #ffffff;
           transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+          box-shadow: 0 6px 16px rgba(21, 88, 201, 0.28);
         }
 
         .skill-tag:hover .skill-icon-wrapper {
