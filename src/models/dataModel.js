@@ -21,7 +21,7 @@ export const userData = {
       icon: "Laptop",
       project: "ShivMalhar Cab Service",
       projectUrl: "https://www.shivmalharcabservice.in/",
-      duration: "2024 - Present"
+      duration: "2025 - Present"
     },
      {
       role: "Intern Software Developer",
@@ -88,6 +88,17 @@ export const userData = {
   },
   projects: [
     {
+      title: "ShivMalhar Cab Service",
+      // duration: "Jan 2026 - Jun 2026",
+      description: "ShivMalhar Cab Service – Your trusted travel partner in Nashik, offering safe, comfortable, and affordable local, outstation, and one-way cab services for every journey.",
+      images: [
+        "/shivmalhar/img 1.png"
+      ],
+      tags: ["ReactJS", "NodeJS","ExpressJS","MySQL"],
+      live: "https://www.shivmalharcabservice.in/",
+      // demo: "#"
+    },
+    {
       title: "SteelMart",
       duration: "Jan 2026 - Jun 2026",
       description: "SteelMart CRM is a MERN stack Customer Relationship Management (CRM) application developed during my internship to streamline customer, vendor, and sales operations in the steel industry. The system enables efficient management of leads, customers, quotations, orders, and invoices through a centralized dashboard. It features secure authentication, role-based access control, and RESTful APIs for seamless business workflow management.",
@@ -98,7 +109,7 @@ export const userData = {
       ],
       tags: ["ReactJS", "NodeJS","ExpressJS","MySQL"],
       github: "https://github.com/AdityaDive08/SteelMart.git",
-      demo: "#"
+      // demo: "#"
     },
     {
       title: "AI Voice Assistant (HealthFreak)",
