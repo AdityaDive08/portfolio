@@ -4,6 +4,38 @@ import { userData } from '../models/dataModel';
 import * as Icons from 'lucide-react';
 
 const About = () => {
+  const handleProjectClick = (e, projectName) => {
+    e.preventDefault();
+    // Reset filters to show all projects
+    window.dispatchEvent(new CustomEvent('filterProjects', { detail: 'All' }));
+
+    const targetId = `project-${projectName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+    
+    setTimeout(() => {
+      const element = document.getElementById(targetId) || document.getElementById('projects');
+      if (element) {
+        const navOffset = 90;
+        const elementPosition = element.getBoundingClientRect().top;
+        const currentScroll = window.scrollY || document.documentElement.scrollTop || window.pageYOffset || 0;
+        const offsetPosition = elementPosition + currentScroll - navOffset;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: 'smooth'
+        });
+
+        element.classList.add('project-card-highlighted');
+        setTimeout(() => {
+          element.classList.remove('project-card-highlighted');
+        }, 2500);
+
+        if (window.history.pushState) {
+          window.history.pushState(null, '', `#${targetId}`);
+        }
+      }
+    }, 60);
+  };
+
   return (
     <>
       <section id="about" className="section">
@@ -106,10 +138,10 @@ const About = () => {
                     {edu.project && (
                       <div className="timeline-project-row">
                         <a 
-                          href={edu.projectUrl || '#projects'} 
-                          target={edu.projectUrl ? '_blank' : '_self'}
-                          rel={edu.projectUrl ? 'noopener noreferrer' : undefined}
+                          href={`#project-${edu.project.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} 
+                          onClick={(e) => handleProjectClick(e, edu.project)}
                           className="project-redirect"
+                          title={`View ${edu.project} in Featured Projects`}
                         >
                           <span>Project: <strong>{edu.project}</strong></span>
                           <Icons.ArrowRight size={14} className="redirect-arrow" />

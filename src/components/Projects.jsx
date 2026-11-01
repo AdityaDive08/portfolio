@@ -76,9 +76,11 @@ const ImageCarousel = ({ images, title, isHovered, imageFit = 'cover' }) => {
 
 const ProjectCard = ({ project, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const projectId = `project-${project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
   return (
     <motion.div 
+      id={projectId}
       className="project-card glass-panel"
       initial={{ opacity: 0, y: 35 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -112,12 +114,25 @@ const ProjectCard = ({ project, index }) => {
         {/* Footer Actions */}
         <div className="project-footer">
           <div className="project-actions">
+            {project.live && (
+              <a 
+                href={project.live} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="project-live-btn"
+                title={`Visit live site for ${project.title}`}
+              >
+                <ExternalLink size={15} />
+                <span>Live Link</span>
+              </a>
+            )}
             {project.github && (
               <a 
                 href={project.github} 
                 target="_blank" 
                 rel="noreferrer"
                 className="project-code-btn"
+                title={`View source code for ${project.title}`}
               >
                 <FaGithub size={16} />
                 <span>Source Code</span>
@@ -251,6 +266,22 @@ const Projects = () => {
           box-shadow: 0 20px 40px -10px rgba(21, 88, 201, 0.15);
         }
 
+        .project-card.project-card-highlighted {
+          border-color: #1558C9 !important;
+          box-shadow: 0 0 0 4px rgba(21, 88, 201, 0.25), 0 22px 45px -10px rgba(21, 88, 201, 0.25) !important;
+          transform: translateY(-6px);
+          animation: pulseBorder 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseBorder {
+          0% {
+            box-shadow: 0 0 0 3px rgba(21, 88, 201, 0.2), 0 15px 30px -10px rgba(21, 88, 201, 0.15);
+          }
+          100% {
+            box-shadow: 0 0 0 6px rgba(21, 88, 201, 0.4), 0 25px 50px -10px rgba(21, 88, 201, 0.3);
+          }
+        }
+
         .project-image-wrapper {
           width: 100%;
           height: 215px;
@@ -377,6 +408,37 @@ const Projects = () => {
           margin-top: auto;
           padding-top: 16px;
           border-top: 1px solid #f1f5f9;
+        }
+
+        .project-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+
+        .project-live-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--primary-blue) !important;
+          background: #eff6ff;
+          border: 1.5px solid var(--primary-blue);
+          padding: 6px 14px;
+          border-radius: 9999px;
+          text-decoration: none;
+          box-shadow: 0 2px 6px rgba(21, 88, 201, 0.1);
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-live-btn:hover {
+          background: linear-gradient(135deg, #1558C9 0%, #1047a5 100%);
+          color: #ffffff !important;
+          border-color: transparent;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(21, 88, 201, 0.35);
         }
 
         .project-code-btn {

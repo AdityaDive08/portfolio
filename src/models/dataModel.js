@@ -20,7 +20,6 @@ export const userData = {
       company: "Self-Employed",
       icon: "Laptop",
       project: "ShivMalhar Cab Service",
-      projectUrl: "https://www.shivmalharcabservice.in/",
       duration: "2025 - Present"
     },
      {
@@ -90,11 +89,11 @@ export const userData = {
     {
       title: "ShivMalhar Cab Service",
       // duration: "Jan 2026 - Jun 2026",
-      description: "ShivMalhar Cab Service – Your trusted travel partner in Nashik, offering safe, comfortable, and affordable local, outstation, and one-way cab services for every journey.",
+      description: "A responsive, modern web application developed for ShivMalhar Cab Service in Nashik, built using the React.js framework. This is a purely static website with no backend and no database, delivering an optimized, lightweight, and smooth browsing experience for local and outstation cab booking inquiries.",
       images: [
         "/shivmalhar/img 1.png"
       ],
-      tags: ["ReactJS", "NodeJS","ExpressJS","MySQL"],
+      tags: ["ReactJS", "Static Website", "JavaScript", "Tailwind CSS"],
       live: "https://www.shivmalharcabservice.in/",
       // demo: "#"
     },

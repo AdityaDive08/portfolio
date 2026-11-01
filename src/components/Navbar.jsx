@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Menu, X, FileText, ChevronRight, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [resumeForm, setResumeForm] = useState({ companyName: '', email: '' });
   const [resumeLoading, setResumeLoading] = useState(false);
   const [resumeError, setResumeError] = useState('');
+  const isClickScrolling = useRef(false);
 
   const navLinks = [
     { name: 'Home', id: 'home' },
@@ -39,20 +40,22 @@ const Navbar = () => {
       return;
     }
     
-    // Check client browser side (localStorage)
-    const downloadedCompanies = JSON.parse(localStorage.getItem('downloaded_companies') || '[]');
-    if (downloadedCompanies.map(c => c.toLowerCase()).includes(trimmedCompanyName.toLowerCase())) {
-      setResumeError('Resume already present with this company name');
-      return;
-    }
-    
     setResumeLoading(true);
     setResumeError('');
+    
+    // Log to backend if reachable (does not prevent download if backend is offline)
     try {
       await submitResumeDownload(trimmedCompanyName, resumeForm.email);
-      
-      downloadedCompanies.push(trimmedCompanyName);
-      localStorage.setItem('downloaded_companies', JSON.stringify(downloadedCompanies));
+    } catch (err) {
+      console.warn('Backend unavailable, proceeding with download directly:', err);
+    }
+
+    try {
+      const downloadedCompanies = JSON.parse(localStorage.getItem('downloaded_companies') || '[]');
+      if (!downloadedCompanies.map(c => c.toLowerCase()).includes(trimmedCompanyName.toLowerCase())) {
+        downloadedCompanies.push(trimmedCompanyName);
+        localStorage.setItem('downloaded_companies', JSON.stringify(downloadedCompanies));
+      }
 
       const link = document.createElement('a');
       link.href = '/AdityaDive_Resume.pdf';
@@ -63,7 +66,7 @@ const Navbar = () => {
       
       closeResumeModal();
     } catch (err) {
-      setResumeError(err.message || 'Error processing download');
+      setResumeError('Could not download resume file. Please try again.');
     } finally {
       setResumeLoading(false);
     }
@@ -71,8 +74,17 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
       setScrolled(scrollY > 20);
+
+      // Don't override active section while smooth scrolling after a navbar click
+      if (isClickScrolling.current) return;
+
+      // Bottom of page check (activates Contact when reached)
+      if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 60) {
+        setActiveSection('contact');
+        return;
+      }
 
       // Scroll Spy Logic
       const sections = navLinks.map(link => link.id);
@@ -97,19 +109,34 @@ const Navbar = () => {
   }, []);
 
   const handleLinkClick = (e, id) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setActiveSection(id);
     setIsOpen(false);
+    isClickScrolling.current = true;
+
     const element = document.getElementById(id);
     if (element) {
       const navOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      const currentScroll = window.scrollY || document.documentElement.scrollTop || window.pageYOffset || 0;
+      const offsetPosition = elementPosition + currentScroll - navOffset;
+      
       window.scrollTo({
-        top: offsetPosition,
+        top: Math.max(0, offsetPosition),
         behavior: 'smooth'
       });
+
+      if (window.history.pushState) {
+        window.history.pushState(null, '', `#${id}`);
+      }
     }
+
+    setTimeout(() => {
+      isClickScrolling.current = false;
+    }, 800);
   };
 
   return (
@@ -416,6 +443,7 @@ const Navbar = () => {
           font-weight: 500;
           text-decoration: none;
           transition: color 0.2s ease;
+          cursor: pointer;
         }
 
         .nav-anchor:hover {
@@ -434,6 +462,7 @@ const Navbar = () => {
           background: linear-gradient(135deg, #1558C9, #1047a5);
           box-shadow: 0 3px 10px rgba(21, 88, 201, 0.3);
           z-index: 0;
+          pointer-events: none;
         }
 
         .nav-text {
@@ -660,14 +689,18 @@ const Navbar = () => {
         }
 
         /* Responsive Breakpoints */
-        @media (max-width: 960px) {
+        @media (max-width: 1040px) {
           .nav-anchor {
-            padding: 7px 10px;
-            font-size: 0.86rem;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+          }
+          .header-inner {
+            padding: 14px 3%;
+            gap: 10px;
           }
         }
 
-        @media (max-width: 860px) {
+        @media (max-width: 900px) {
           .desktop-navigation {
             display: none;
           }
