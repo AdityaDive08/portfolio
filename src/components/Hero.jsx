@@ -60,11 +60,11 @@ const Hero = () => {
           </motion.p>
           
           <motion.div variants={itemVariants} className="hero-cta-group">
-            <a href="#projects" className="btn btn-primary">
+            <a href="/" onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.history.pushState(null, '', window.location.pathname); }} className="btn btn-primary">
               <span>View My Work</span>
               <ArrowRight size={17} />
             </a>
-            <a href="#contact" className="btn btn-outline">
+            <a href="/" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.history.pushState(null, '', window.location.pathname); }} className="btn btn-outline">
               <MessageSquare size={17} />
               <span>Contact Me</span>
             </a>
@@ -321,7 +321,7 @@ const Hero = () => {
         .squircle-social-instagram,
         .squircle-social-email {
           background: linear-gradient(135deg, #1558C9, #1e40af);
-          border: 1px solid rgba(56, 189, 248, 0.35);
+          border: 0.5px solid rgba(56, 189, 248, 0.2);
         }
 
         /* Profile Visual Side */
@@ -487,16 +487,17 @@ const Hero = () => {
           .hero-container {
             flex-direction: column-reverse;
             text-align: center;
-            gap: 40px;
+            gap: 30px;
           }
           .hero-content {
             max-width: 100%;
           }
           .hero-bio {
-            margin: 0 auto 30px auto;
+            margin: 0 auto 20px auto;
           }
           .hero-cta-group {
             justify-content: center;
+            margin-bottom: 24px;
           }
           .hero-socials-wrapper {
             justify-content: center;
@@ -508,21 +509,36 @@ const Hero = () => {
 
         @media (max-width: 768px) {
           .hero-section {
-            padding-top: 105px;
+            padding-top: 95px;
+            padding-bottom: 40px;
+            min-height: auto;
+          }
+          .hero-container {
+            gap: 30px;
           }
           .hero-name {
             font-size: 2.8rem;
+            margin-bottom: 8px;
           }
           .hero-role {
             font-size: 1.45rem;
+            margin-bottom: 12px;
+          }
+          .hero-bio {
+            margin: 0 auto 16px auto;
+            font-size: 1rem;
+          }
+          .hero-cta-group {
+            margin-bottom: 18px;
+            gap: 12px;
           }
           .profile-card-wrapper {
-            width: 290px;
-            height: 290px;
-          }
-          .profile-frame {
             width: 250px;
             height: 250px;
+          }
+          .profile-frame {
+            width: 220px;
+            height: 220px;
           }
           .floating-tech-badge {
             padding: 6px 11px;
@@ -535,29 +551,53 @@ const Hero = () => {
           .badge-react { top: 50%; left: -25px; }
           .badge-express { bottom: 25px; right: -20px; }
           .badge-sql { bottom: -10px; left: 24%; }
+          .squircle-social-btn {
+            width: 38px;
+            height: 38px;
+          }
+          .squircle-socials-list {
+            gap: 6px;
+            padding: 6px;
+          }
         }
 
         @media (max-width: 480px) {
+          .hero-section {
+            padding-top: 95px;
+            padding-bottom: 30px;
+          }
+          .hero-container {
+            gap: 22px;
+          }
           .hero-name {
             font-size: 2.3rem;
+            margin-bottom: 6px;
           }
           .hero-role {
             font-size: 1.25rem;
+            margin-bottom: 10px;
+          }
+          .hero-bio {
+            margin: 0 auto 14px auto;
+            font-size: 0.95rem;
+            line-height: 1.5;
           }
           .hero-cta-group {
             flex-direction: column;
             width: 100%;
+            margin-bottom: 16px;
+            gap: 10px;
           }
           .hero-cta-group .btn {
             width: 100%;
           }
           .profile-card-wrapper {
-            width: 240px;
-            height: 240px;
-          }
-          .profile-frame {
             width: 210px;
             height: 210px;
+          }
+          .profile-frame {
+            width: 180px;
+            height: 180px;
           }
           .floating-tech-badge {
             padding: 5px 9px;
@@ -570,6 +610,14 @@ const Hero = () => {
           .badge-react { top: 50%; left: -15px; }
           .badge-express { bottom: 15px; right: -10px; }
           .badge-sql { bottom: -8px; left: 20%; }
+          .squircle-social-btn {
+            width: 36px;
+            height: 36px;
+          }
+          .squircle-socials-list {
+            gap: 5px;
+            padding: 5px;
+          }
         }
       `}</style>
     </section>

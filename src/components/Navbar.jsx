@@ -130,7 +130,7 @@ const Navbar = () => {
       });
 
       if (window.history.pushState) {
-        window.history.pushState(null, '', `#${id}`);
+        window.history.pushState(null, '', window.location.pathname);
       }
     }
 
@@ -146,7 +146,7 @@ const Navbar = () => {
         <div className="header-inner">
           {/* Brand Logo */}
           <a 
-            href="#home" 
+            href="/"
             onClick={(e) => handleLinkClick(e, 'home')}
             className="navbar-brand"
             aria-label="Aditya Dive Home"
@@ -166,7 +166,7 @@ const Navbar = () => {
                 return (
                   <li key={link.id} className="nav-item">
                     <a
-                      href={`#${link.id}`}
+                      href="/"
                       onClick={(e) => handleLinkClick(e, link.id)}
                       className={`nav-anchor ${isActive ? 'is-active' : ''}`}
                     >
@@ -222,7 +222,7 @@ const Navbar = () => {
                   return (
                     <a
                       key={link.id}
-                      href={`#${link.id}`}
+                      href="/"
                       onClick={(e) => handleLinkClick(e, link.id)}
                       className={`mobile-menu-link ${isActive ? 'is-active' : ''}`}
                     >
