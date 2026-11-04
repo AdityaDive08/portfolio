@@ -70,22 +70,32 @@ const Hero = () => {
             </a>
           </motion.div>
           
-          {/* Social Links */}
+          {/* Social Links - Squircle Style */}
           <motion.div variants={itemVariants} className="hero-socials-wrapper">
-            {/* <span className="socials-label">Connect:</span> */}
-            <div className="socials-list">
-              {socials.map((item, idx) => (
-                <a 
-                  key={idx} 
-                  href={item.link} 
-                  target={(item.link !== "#" && !item.link.startsWith("mailto:")) ? "_blank" : "_self"} 
-                  rel="noreferrer" 
-                  aria-label={item.label}
-                  className="hero-social-pill"
-                >
-                  <item.Icon size={18} />
-                </a>
-              ))}
+            <svg width="0" height="0" style={{ position: 'absolute' }}>
+              <defs>
+                <clipPath id="squircleClip" clipPathUnits="objectBoundingBox">
+                  <path d="M 0,0.5 C 0,0 0,0 0.5,0 S 1,0 1,0.5 1,1 0.5,1 0,1 0,0.5" />
+                </clipPath>
+              </defs>
+            </svg>
+            <div className="squircle-socials-container">
+              <div className="squircle-socials-backdrop"></div>
+              <div className="squircle-socials-list">
+                {socials.map((item, idx) => (
+                  <a
+                    key={idx}
+                    href={item.link}
+                    target={(item.link !== "#" && !item.link.startsWith("mailto:")) ? "_blank" : "_self"}
+                    rel="noreferrer"
+                    aria-label={item.label}
+                    className={`squircle-social-btn squircle-social-${item.label.toLowerCase()}`}
+                    style={{ clipPath: 'url(#squircleClip)' }}
+                  >
+                    <item.Icon size={15} />
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -243,40 +253,75 @@ const Hero = () => {
           gap: 16px;
         }
 
-        .socials-label {
-          font-size: 0.9rem;
-          font-weight: 600;
-          color: var(--text-light);
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+        .squircle-socials-container {
+          position: relative;
+          display: inline-block;
         }
 
-        .socials-list {
+        .squircle-socials-backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.12);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-radius: 16px;
+          border: 1.5px solid transparent;
+          background-clip: padding-box;
+          box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.25);
+        }
+
+        .squircle-socials-container::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 16px;
+          padding: 1.5px;
+          background: linear-gradient(135deg, #1558C9, #38bdf8);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .squircle-socials-list {
+          position: relative;
           display: flex;
-          align-items: center;
-          gap: 10px;
+          align-items: flex-end;
+          gap: 8px;
+          padding: 8px;
         }
 
-        .hero-social-pill {
+        .squircle-social-btn {
           display: flex;
           align-items: center;
           justify-content: center;
           width: 42px;
           height: 42px;
           border-radius: 12px;
-          background: #ffffff;
-          border: 1.5px solid #e2e8f0;
-          color: var(--text-secondary);
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+          color: #ffffff;
+          cursor: pointer;
+          transform: translateY(0);
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          text-decoration: none;
         }
 
-        .hero-social-pill:hover {
-          background: var(--gradient-accent);
-          color: #ffffff !important;
-          border-color: transparent;
-          transform: translateY(-3px);
-          box-shadow: 0 8px 18px rgba(21, 88, 201, 0.3);
+        .squircle-social-btn:hover {
+          transform: scale(1.12) translateY(-6px);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+          color: #ffffff;
+        }
+
+        /* Individual social colors */
+        .squircle-social-github,
+        .squircle-social-linkedin,
+        .squircle-social-leetcode,
+        .squircle-social-instagram,
+        .squircle-social-email {
+          background: linear-gradient(135deg, #1558C9, #1e40af);
+          border: 1px solid rgba(56, 189, 248, 0.35);
         }
 
         /* Profile Visual Side */
